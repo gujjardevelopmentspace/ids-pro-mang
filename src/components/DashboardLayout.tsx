@@ -1,85 +1,407 @@
-import { Bell, ChevronDown } from "lucide-react";
-import { ReactNode } from "react";
+import { Bell, ChevronDown, LogOut, CheckCircle, AlertTriangle, Info, Clock, X, Menu } from "lucide-react";
+import { ReactNode, useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 interface DashboardLayoutProps {
   children: ReactNode;
 }
 
+interface Notification {
+  id: number;
+  type: 'success' | 'warning' | 'info' | 'pending';
+  title: string;
+  message: string;
+  time: string;
+  read: boolean;
+}
+
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [notifications, setNotifications] = useState<Notification[]>([
+    {
+      id: 1,
+      type: 'success',
+      title: 'Work Order Approved',
+      message: 'Work Order #WO-001 has been approved successfully',
+      time: '5 min ago',
+      read: false
+    },
+    {
+      id: 2,
+      type: 'warning',
+      title: 'Low Stock Alert',
+      message: 'Sand inventory is running low. Current stock: 15%',
+      time: '15 min ago',
+      read: false
+    },
+    {
+      id: 3,
+      type: 'info',
+      title: 'New Document Uploaded',
+      message: 'Project blueprint v2.3 has been uploaded to Documents',
+      time: '1 hour ago',
+      read: false
+    },
+    {
+      id: 4,
+      type: 'pending',
+      title: 'Pending Approval',
+      message: 'You have 5 new items awaiting your approval',
+      time: '2 hours ago',
+      read: false
+    },
+    {
+      id: 5,
+      type: 'success',
+      title: 'Payment Processed',
+      message: 'Payment of $25,000 has been successfully processed',
+      time: '3 hours ago',
+      read: true
+    }
+  ]);
+
+  // Get user data from localStorage
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
+  const userName = userData.email ? userData.email.split("@")[0].toUpperCase() : "USER";
+  const userRole = userData.role || "Developer";
+
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("isAuthenticated");
+    window.location.href = "/login";
+  };
+
+  const markAsRead = (id: number) => {
+    setNotifications(prev => prev.map(n => 
+      n.id === id ? { ...n, read: true } : n
+    ));
+  };
+
+  const markAllAsRead = () => {
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+  };
+
+  const deleteNotification = (id: number) => {
+    setNotifications(prev => prev.filter(n => n.id !== id));
+  };
+
+  const clearAll = () => {
+    setNotifications([]);
+  };
+
+  const getNotificationIcon = (type: string) => {
+    switch (type) {
+      case 'success':
+        return <CheckCircle className="w-5 h-5 text-green-500" />;
+      case 'warning':
+        return <AlertTriangle className="w-5 h-5 text-yellow-500" />;
+      case 'info':
+        return <Info className="w-5 h-5 text-blue-500" />;
+      case 'pending':
+        return <Clock className="w-5 h-5 text-orange-500" />;
+      default:
+        return <Info className="w-5 h-5 text-gray-500" />;
+    }
+  };
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.notification-dropdown') && !target.closest('.notification-button')) {
+        setShowNotifications(false);
+      }
+      if (!target.closest('.user-menu-dropdown') && !target.closest('.user-menu-button')) {
+        setShowUserMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Close mobile menu on route change
+  const location = useLocation();
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
   return (
-    <div className="flex h-screen bg-background">
-      {/* Sidebar */}
-      <aside className="w-72 bg-sidebar border-r border-sidebar-border flex flex-col">
+    <div className="flex h-screen bg-background overflow-hidden">
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar - Desktop & Mobile */}
+      <aside className={`
+        fixed lg:static inset-y-0 left-0 z-50
+        w-72 bg-sidebar border-r border-sidebar-border flex flex-col
+        transform transition-transform duration-300 ease-in-out
+        ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
         {/* Logo */}
-        <div className="p-6 border-b border-sidebar-border">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-sidebar-accent rounded-lg flex items-center justify-center">
-              <svg viewBox="0 0 40 40" className="w-8 h-8" fill="none">
-                <rect x="4" y="4" width="12" height="32" fill="currentColor" className="text-sidebar-foreground" />
-                <rect x="20" y="4" width="4" height="32" fill="currentColor" className="text-sidebar-foreground" />
-                <rect x="28" y="4" width="8" height="32" fill="currentColor" className="text-sidebar-foreground" />
-              </svg>
+        <div className="p-4 lg:p-6 border-b border-sidebar-border">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-primary rounded-lg flex items-center justify-center">
+                <svg viewBox="0 0 40 40" className="w-6 h-6 lg:w-8 lg:h-8" fill="none">
+                  <rect x="4" y="4" width="12" height="32" fill="currentColor" className="text-primary-foreground" />
+                  <rect x="20" y="4" width="4" height="32" fill="currentColor" className="text-primary-foreground" />
+                  <rect x="28" y="4" width="8" height="32" fill="currentColor" className="text-primary-foreground" />
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-base lg:text-xl font-bold text-sidebar-foreground">Inventer Design Studio</h1>
+                <p className="text-[10px] lg:text-xs text-muted-foreground">Software Development House</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-sidebar-foreground">EZYPRO</h1>
-              <p className="text-xs text-sidebar-foreground/70">Project Management Simplified</p>
-            </div>
+            {/* Close button for mobile */}
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="lg:hidden p-2 hover:bg-muted rounded-lg transition-colors"
+            >
+              <X className="w-5 h-5 text-sidebar-foreground" />
+            </button>
           </div>
         </div>
 
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          <NavItem icon="dashboard" label="Dashboard" active />
-          <NavItem icon="dashboard" label="Dashboard 1" />
-          <NavItem icon="inbox" label="My Pending Actions" />
-          <NavItem icon="inventory" label="Inventory and Assets Dashboard" />
-          <NavItem icon="graph" label="Live Graphs" />
-          <NavItem icon="user-overview" label="User Overview" />
-          <NavItem icon="performance" label="Users Performance" />
-          <NavItem icon="approvals" label="Approvals Flow" />
-          <NavItem icon="users" label="Staff" />
-          <NavItem icon="site" label="Sites" />
-          <NavItem icon="documents" label="Documents" />
-          <NavItem icon="projects" label="Projects" />
-          <NavItem icon="items" label="Items" />
-          <NavItem icon="drawing" label="Drawing Management Section" />
-          <NavItem icon="bids" label="Bids" />
-          <NavItem icon="proposal" label="Bid Proposal" />
-          <NavItem icon="proposal-approvals" label="Bid Proposal Approvals" />
-          <NavItem icon="work-order" label="Work Order" />
-          <NavItem icon="approved-work" label="Approved Work Order" />
-          <NavItem icon="planning" label="Planning" />
-          <NavItem icon="inspection" label="Inspection Requests" />
-          <NavItem icon="ir-approvals" label="IR Approvals" />
-          <NavItem icon="ipc" label="IPCs" />
-          <NavItem icon="ipc-approvals" label="IPC Approvals" />
-          <NavItem icon="hse" label="HSE / Environment (Checklists & Reports)" />
-          <NavItem icon="materials" label="Materials Section" />
-          <NavItem icon="assets" label="Assets Management Section" />
-          <NavItem icon="lab-tests" label="Lab Tests" />
-          <NavItem icon="reports" label="Reports" />
-          <NavItem icon="query" label="Query Dashboard" />
-          <NavItem icon="settings" label="Settings" />
+          <NavItem icon="dashboard" label="Dashboard" href="/" />
+          <NavItem icon="dashboard" label="Dashboard 1" href="/dashboard1" />
+          <NavItem icon="inbox" label="My Pending Actions" href="/my-pending-actions" />
+          <NavItem icon="inventory" label="Code Repository Dashboard" href="/inventory-dashboard" />
+          <NavItem icon="graph" label="Live Analytics" href="/live-graphs" />
+          <NavItem icon="user-overview" label="Developer Overview" href="/user-overview" />
+          <NavItem icon="performance" label="Developer Performance" href="/users-performance" />
+          <NavItem icon="approvals" label="Code Review Flow" href="/approvals-flow" />
+          <NavItem icon="users" label="Development Team" href="/staff" />
+          <NavItem icon="site" label="Client Projects" href="/sites" />
+          <NavItem icon="documents" label="Documents" href="/documents" />
+          <NavItem icon="projects" label="Projects" href="/projects" />
+          <NavItem icon="items" label="Items" href="/items" />
+          <NavItem icon="drawing" label="Drawing Management Section" href="/drawing-management" />
+          <NavItem icon="bids" label="Bids" href="/bids" />
+          <NavItem icon="proposal" label="Bid Proposal" href="/bid-proposal" />
+          <NavItem icon="proposal-approvals" label="Bid Proposal Approvals" href="/bid-proposal-approvals" />
+          <NavItem icon="work-order" label="Work Order" href="/work-order" />
+          <NavItem icon="approved-work" label="Approved Work Order" href="/approved-work-order" />
+          <NavItem icon="planning" label="Planning" href="/planning" />
+          <NavItem icon="inspection" label="Inspection Requests" href="/inspection-requests" />
+          <NavItem icon="ir-approvals" label="IR Approvals" href="/ir-approvals" />
+          <NavItem icon="ipc" label="IPCs" href="/ipcs" />
+          <NavItem icon="ipc-approvals" label="IPC Approvals" href="/ipc-approvals" />
+          <NavItem icon="hse" label="HSE / Environment (Checklists & Reports)" href="/hse-environment" />
+          <NavItem icon="materials" label="Materials Section" href="/materials-section" />
+          <NavItem icon="assets" label="Assets Management Section" href="/assets-management" />
+          <NavItem icon="lab-tests" label="Lab Tests" href="/lab-tests" />
+          <NavItem icon="reports" label="Reports" href="/reports" />
+          <NavItem icon="query" label="Query Dashboard" href="/query-dashboard" />
+          <NavItem icon="settings" label="Settings" href="/settings" />
         </nav>
       </aside>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
-        <header className="h-16 bg-card border-b border-border flex items-center justify-between px-8">
-          <h2 className="text-2xl font-semibold text-foreground">Dashboard</h2>
-          
-          <div className="flex items-center gap-4">
-            <button className="relative p-2 hover:bg-secondary rounded-lg transition-colors">
-              <Bell className="w-5 h-5 text-foreground" />
+        <header className="h-16 bg-background border-b border-border flex items-center justify-between px-4 lg:px-8 shadow-sm">
+          <div className="flex items-center gap-2 lg:gap-4">
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 hover:bg-muted rounded-lg transition-colors"
+              aria-label="Toggle menu"
+            >
+              <Menu className="w-6 h-6 text-foreground" />
             </button>
             
-            <div className="flex items-center gap-3 cursor-pointer hover:bg-secondary rounded-lg px-3 py-2 transition-colors">
-              <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center">
-                <span className="text-sm font-medium text-foreground">AH</span>
+            <h2 className="text-lg lg:text-2xl font-semibold text-foreground">Inventer Design Studio</h2>
+            <div className="hidden xl:flex items-center gap-2 text-sm text-muted-foreground">
+              <span className="text-primary">•</span>
+              <span>Software Development House</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-2 lg:gap-4">
+            {/* Notifications */}
+            <div className="relative">
+              <button 
+                onClick={() => setShowNotifications(!showNotifications)}
+                className="notification-button relative p-2 hover:bg-muted rounded-lg transition-colors"
+              >
+                <Bell className="w-5 h-5 text-foreground" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center">
+                    <span className="text-xs text-primary-foreground font-medium">{unreadCount}</span>
+                  </span>
+                )}
+              </button>
+
+              {/* Notifications Dropdown */}
+              {showNotifications && (
+                <div className="notification-dropdown absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] sm:w-96 bg-card border border-border rounded-lg shadow-lg z-50 max-h-[600px] overflow-hidden flex flex-col">
+                  {/* Header */}
+                  <div className="p-4 border-b border-border flex items-center justify-between">
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground">Notifications</h3>
+                      <p className="text-xs text-muted-foreground">{unreadCount} unread notifications</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {unreadCount > 0 && (
+                        <button
+                          onClick={markAllAsRead}
+                          className="text-xs text-primary hover:text-primary/80 transition-colors"
+                        >
+                          Mark all read
+                        </button>
+                      )}
+                      {notifications.length > 0 && (
+                        <button
+                          onClick={clearAll}
+                          className="text-xs text-destructive hover:text-destructive/80 transition-colors"
+                        >
+                          Clear all
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Notifications List */}
+                  <div className="flex-1 overflow-y-auto">
+                    {notifications.length === 0 ? (
+                      <div className="p-8 text-center">
+                        <Bell className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                        <p className="text-sm text-muted-foreground">No notifications</p>
+                        <p className="text-xs text-muted-foreground mt-1">You're all caught up!</p>
+                      </div>
+                    ) : (
+                      <div className="divide-y divide-border">
+                        {notifications.map((notification) => (
+                          <div
+                            key={notification.id}
+                            className={`p-4 hover:bg-muted/50 transition-colors cursor-pointer ${
+                              !notification.read ? 'bg-muted/30' : ''
+                            }`}
+                            onClick={() => markAsRead(notification.id)}
+                          >
+                            <div className="flex items-start gap-3">
+                              <div className="flex-shrink-0 mt-1">
+                                {getNotificationIcon(notification.type)}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-start justify-between gap-2">
+                                  <h4 className={`text-sm font-medium ${
+                                    !notification.read ? 'text-foreground' : 'text-muted-foreground'
+                                  }`}>
+                                    {notification.title}
+                                  </h4>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      deleteNotification(notification.id);
+                                    }}
+                                    className="p-1 hover:bg-muted rounded transition-colors"
+                                  >
+                                    <X className="w-3 h-3 text-muted-foreground" />
+                                  </button>
+                                </div>
+                                <p className="text-xs text-muted-foreground mt-1">
+                                  {notification.message}
+                                </p>
+                                <div className="flex items-center gap-2 mt-2">
+                                  <span className="text-xs text-muted-foreground">{notification.time}</span>
+                                  {!notification.read && (
+                                    <span className="w-2 h-2 bg-primary rounded-full"></span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Footer */}
+                  {notifications.length > 0 && (
+                    <div className="p-3 border-t border-border">
+                      <Link
+                        to="/my-pending-actions"
+                        onClick={() => setShowNotifications(false)}
+                        className="block text-center text-sm text-primary hover:text-primary/80 transition-colors"
+                      >
+                        View all pending actions →
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+            
+            {/* User Menu */}
+            <div className="relative">
+              <div 
+                className="user-menu-button flex items-center gap-2 lg:gap-3 cursor-pointer hover:bg-muted rounded-lg px-2 lg:px-4 py-2 transition-colors"
+                onClick={() => setShowUserMenu(!showUserMenu)}
+              >
+                <div className="w-8 h-8 lg:w-9 lg:h-9 rounded-full bg-primary flex items-center justify-center">
+                  <span className="text-xs lg:text-sm font-medium text-primary-foreground">{userName.substring(0, 2)}</span>
+                </div>
+                <div className="hidden md:block">
+                  <span className="text-sm font-medium text-foreground">{userName}</span>
+                  <p className="text-xs text-muted-foreground">{userRole}</p>
+                </div>
+                <ChevronDown className="w-4 h-4 text-muted-foreground hidden sm:block" />
               </div>
-              <span className="text-sm font-medium text-foreground">AHSAN UL HAQ</span>
-              <ChevronDown className="w-4 h-4 text-muted-foreground" />
+              
+              {/* User Dropdown Menu */}
+              {showUserMenu && (
+                <div className="user-menu-dropdown absolute right-0 top-full mt-2 w-48 bg-card border border-border rounded-lg shadow-lg z-50">
+                  <div className="p-2">
+                    <Link
+                      to="/user-profile"
+                      onClick={() => setShowUserMenu(false)}
+                      className="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground hover:bg-muted rounded-lg transition-colors"
+                    >
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                      </svg>
+                      Profile
+                    </Link>
+                    <Link
+                      to="/settings"
+                      onClick={() => setShowUserMenu(false)}
+                      className="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground hover:bg-muted rounded-lg transition-colors"
+                    >
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M12 1v6m0 6v6" />
+                        <path d="m4.93 4.93 4.24 4.24m5.66 5.66 4.24 4.24" />
+                        <path d="M1 12h6m6 0h6" />
+                        <path d="m4.93 19.07 4.24-4.24m5.66-5.66 4.24-4.24" />
+                      </svg>
+                      Settings
+                    </Link>
+                    <hr className="my-2 border-border" />
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-3 px-3 py-2 text-sm text-foreground hover:bg-muted rounded-lg transition-colors"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </header>
@@ -96,20 +418,45 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
 interface NavItemProps {
   icon: string;
   label: string;
+  href?: string;
   active?: boolean;
 }
 
-const NavItem = ({ icon, label, active }: NavItemProps) => {
+const NavItem = ({ icon, label, href, active }: NavItemProps) => {
+  const location = useLocation();
+  const isActive = active || (href && location.pathname === href);
+
+  const content = (
+    <>
+      <NavIcon type={icon} />
+      <span className="text-sm font-medium text-sidebar-foreground">{label}</span>
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link
+        to={href}
+        className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+          isActive
+            ? "bg-sidebar-accent shadow-lg"
+            : "hover:bg-sidebar-accent/50"
+        }`}
+      >
+        {content}
+      </Link>
+    );
+  }
+
   return (
     <button
       className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-        active
+        isActive
           ? "bg-sidebar-accent shadow-lg"
           : "hover:bg-sidebar-accent/50"
       }`}
     >
-      <NavIcon type={icon} />
-      <span className="text-sm font-medium text-sidebar-foreground">{label}</span>
+      {content}
     </button>
   );
 };
