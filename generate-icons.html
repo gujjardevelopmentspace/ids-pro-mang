@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate PWA Icons</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #0A1F1F;
+      color: #F2F2F2;
+    }
+    #icon-preview {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .icon-container {
+      text-align: center;
+    }
+    button {
+      background: #28A3A3;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 5px;
+    }
+    button:hover {
+      background: #1f8888;
+    }
+    h1 {
+      color: #28A3A3;
+    }
+    .instructions {
+      background: #0D2626;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #243D3D;
+      margin: 20px 0;
+    }
+    code {
+      background: #152E2E;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #28A3A3;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎨 IDS PWA Icon Generator</h1>
+  
+  <div class="instructions">
+    <h3>Quick Fix for PWA Icons Error</h3>
+    <p>The error occurs because the PWA is looking for icon files that don't exist. Here are your options:</p>
+    
+    <h4>Option 1: Use Favicon Only (Recommended - Quick Fix)</h4>
+    <p>✅ <strong>Already applied!</strong> The vite.config.ts has been updated to use only favicon.ico</p>
+    <p>No action needed - the error should be gone after restart.</p>
+    
+    <h4>Option 2: Generate Proper PWA Icons</h4>
+    <p>For production, you should create proper PWA icons:</p>
+    <ol>
+      <li>Click the buttons below to download icon templates</li>
+      <li>Save them in the <code>public/</code> folder</li>
+      <li>Update <code>vite.config.ts</code> to include them</li>
+    </ol>
+  </div>
+
+  <div id="icon-preview"></div>
+
+  <div>
+    <button onclick="generateIcon(192)">Download 192x192 Icon</button>
+    <button onclick="generateIcon(512)">Download 512x512 Icon</button>
+    <button onclick="generateAllIcons()">Download All Icons</button>
+  </div>
+
+  <script>
+    function createIconSVG(size) {
+      const svg = `
+        <svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
+          <rect width="${size}" height="${size}" fill="#0A1F1F"/>
+          <rect x="${size * 0.15}" y="${size * 0.15}" width="${size * 0.25}" height="${size * 0.7}" fill="#28A3A3" rx="${size * 0.02}"/>
+          <rect x="${size * 0.45}" y="${size * 0.15}" width="${size * 0.1}" height="${size * 0.7}" fill="#28A3A3" rx="${size * 0.02}"/>
+          <rect x="${size * 0.6}" y="${size * 0.15}" width="${size * 0.25}" height="${size * 0.7}" fill="#28A3A3" rx="${size * 0.02}"/>
+        </svg>
+      `;
+      return svg;
+    }
+
+    function generateIcon(size) {
+      const svg = createIconSVG(size);
+      const blob = new Blob([svg], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      
+      const img = new Image();
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(function(pngBlob) {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(pngBlob);
+          a.download = `icon-${size}.png`;
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+      };
+      img.src = url;
+    }
+
+    function generateAllIcons() {
+      [192, 512].forEach(size => {
+        setTimeout(() => generateIcon(size), size === 192 ? 0 : 500);
+      });
+    }
+
+    // Show preview
+    function showPreview() {
+      const preview = document.getElementById('icon-preview');
+      [64, 192, 512].forEach(size => {
+        const container = document.createElement('div');
+        container.className = 'icon-container';
+        const svg = createIconSVG(size);
+        container.innerHTML = `
+          <div>${svg}</div>
+          <p>${size}x${size}</p>
+        `;
+        preview.appendChild(container);
+      });
+    }
+
+    showPreview();
+  </script>
+
+  <div class="instructions" style="margin-top: 40px;">
+    <h3>✅ Current Status</h3>
+    <p><strong>PWA Configuration:</strong> Updated to use favicon.ico only</p>
+    <p><strong>Error:</strong> Should be resolved after dev server restart</p>
+    <p><strong>Production:</strong> Generate proper icons using buttons above</p>
+    
+    <h4>Restart Dev Server:</h4>
+    <pre><code>
+# Stop current server (Ctrl+C in terminal)
+# Then restart:
+npm run dev
+    </code></pre>
+  </div>
+</body>
+</html>
+

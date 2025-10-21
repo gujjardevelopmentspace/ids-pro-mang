@@ -14,6 +14,7 @@ export default {
     },
     extend: {
       colors: {
+        // Inventer Design Studio Color Palette - Dark Teal Theme
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -62,6 +63,17 @@ export default {
           green: "hsl(var(--metric-green))",
           coral: "hsl(var(--metric-coral))",
         },
+        // Additional Inventer Design Studio colors
+        "ids-primary": "#28A3A3",
+        "ids-text": "#F2F2F2",
+        "ids-text-secondary": "#9BA8A8",
+        "ids-bg": "#0A1F1F",
+        "ids-card": "#0D2626",
+        "ids-border": "#243D3D",
+        "ids-teal-dark": "#0B2222",
+        "ids-teal-medium": "#1A3D3D",
+        "ids-teal-bright": "#28A3A3",
+        "ids-cyan": "#3DC4C4",
       },
       boxShadow: {
         card: "var(--shadow-card)",
