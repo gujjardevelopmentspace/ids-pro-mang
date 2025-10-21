@@ -1,0 +1,19 @@
+{
+  "name": "IDS Project Management",
+  "short_name": "IDS PM",
+  "description": "Comprehensive project management system with dark teal theme",
+  "theme_color": "#0A1F1F",
+  "background_color": "#0A1F1F",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
+
