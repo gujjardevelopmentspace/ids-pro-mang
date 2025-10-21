@@ -8,89 +8,91 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 220 15% 20%;
+    /* Inventer Design Studio Color System - Dark Teal Theme */
+    --background: 180 50% 6%; /* #0A1F1F - Deep Dark Teal */
+    --foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 15% 20%;
+    --card: 180 40% 8%; /* #0D2626 - Slightly Lighter Dark Teal */
+    --card-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 20%;
+    --popover: 180 40% 8%; /* #0D2626 - Slightly Lighter Dark Teal */
+    --popover-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
 
-    --primary: 230 60% 15%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF - White */
 
-    --secondary: 220 15% 95%;
-    --secondary-foreground: 220 15% 20%;
+    --secondary: 180 35% 15%; /* #1A3D3D - Medium Dark Teal */
+    --secondary-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
 
-    --muted: 220 15% 95%;
-    --muted-foreground: 220 10% 50%;
+    --muted: 180 30% 12%; /* #152E2E - Muted Dark Teal */
+    --muted-foreground: 180 10% 65%; /* #9BA8A8 - Muted Light Teal */
 
-    --accent: 220 15% 95%;
-    --accent-foreground: 220 15% 20%;
+    --accent: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
+    --accent-foreground: 0 0% 100%; /* #FFFFFF - White */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%; /* #DD3333 - Red for errors */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF - White */
 
-    --border: 220 15% 90%;
-    --input: 220 15% 90%;
-    --ring: 230 60% 15%;
+    --border: 180 30% 20%; /* #243D3D - Darker Teal Border */
+    --input: 180 40% 10%; /* #0F2828 - Dark Teal Input Background */
+    --ring: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    --sidebar-background: 230 60% 15%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 230 60% 15%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 230 55% 20%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 230 50% 20%;
-    --sidebar-ring: 230 60% 15%;
+    --sidebar-background: 180 45% 7%; /* #0B2222 - Sidebar Dark Teal */
+    --sidebar-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
+    --sidebar-primary: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
+    --sidebar-primary-foreground: 0 0% 100%; /* #FFFFFF - White */
+    --sidebar-accent: 180 35% 15%; /* #1A3D3D - Medium Dark Teal */
+    --sidebar-accent-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
+    --sidebar-border: 180 30% 20%; /* #243D3D - Darker Teal Border */
+    --sidebar-ring: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
 
-    --metric-cyan: 180 80% 50%;
-    --metric-green: 150 70% 45%;
-    --metric-coral: 355 80% 65%;
+    --metric-cyan: 180 65% 55%; /* #3DC4C4 - Bright Cyan */
+    --metric-green: 150 65% 50%; /* #2DBD7D - Green accent */
+    --metric-coral: 15 80% 60%; /* #E87D5C - Coral accent */
     
-    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
   }
 
   .dark {
-    --background: 220 20% 10%;
-    --foreground: 0 0% 95%;
+    /* Inventer Design Studio Dark Mode - Same as light mode for consistency */
+    --background: 180 50% 6%; /* #0A1F1F - Deep Dark Teal */
+    --foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
 
-    --card: 220 20% 15%;
-    --card-foreground: 0 0% 95%;
+    --card: 180 40% 8%; /* #0D2626 - Slightly Lighter Dark Teal */
+    --card-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
 
-    --popover: 220 20% 15%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 180 40% 8%; /* #0D2626 - Slightly Lighter Dark Teal */
+    --popover-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
 
-    --primary: 230 60% 15%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF - White */
 
-    --secondary: 220 20% 20%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 180 35% 15%; /* #1A3D3D - Medium Dark Teal */
+    --secondary-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
 
-    --muted: 220 20% 20%;
-    --muted-foreground: 220 10% 60%;
+    --muted: 180 30% 12%; /* #152E2E - Muted Dark Teal */
+    --muted-foreground: 180 10% 65%; /* #9BA8A8 - Muted Light Teal */
 
-    --accent: 220 20% 20%;
-    --accent-foreground: 0 0% 95%;
+    --accent: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
+    --accent-foreground: 0 0% 100%; /* #FFFFFF - White */
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%; /* #DD3333 - Red for errors */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF - White */
 
-    --border: 220 20% 20%;
-    --input: 220 20% 20%;
-    --ring: 230 60% 15%;
+    --border: 180 30% 20%; /* #243D3D - Darker Teal Border */
+    --input: 180 40% 10%; /* #0F2828 - Dark Teal Input Background */
+    --ring: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
     
-    --sidebar-background: 230 60% 15%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 230 60% 15%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 230 55% 20%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 230 50% 20%;
-    --sidebar-ring: 230 60% 15%;
+    --sidebar-background: 180 45% 7%; /* #0B2222 - Sidebar Dark Teal */
+    --sidebar-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
+    --sidebar-primary: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
+    --sidebar-primary-foreground: 0 0% 100%; /* #FFFFFF - White */
+    --sidebar-accent: 180 35% 15%; /* #1A3D3D - Medium Dark Teal */
+    --sidebar-accent-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
+    --sidebar-border: 180 30% 20%; /* #243D3D - Darker Teal Border */
+    --sidebar-ring: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
   }
 }
 
@@ -101,5 +103,139 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    line-height: 1.6;
+  }
+
+  /* Inventer Design Studio Typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold text-foreground;
+    letter-spacing: -0.025em;
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-3xl;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+
+  h4 {
+    @apply text-xl;
+  }
+
+  /* Professional button styles with Black and Gold aesthetic */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-primary/90 hover:shadow-lg border border-primary;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-medium transition-all duration-200 hover:bg-secondary/80 border border-border;
+  }
+
+  /* Card enhancements */
+  .card-enhanced {
+    @apply bg-card border border-border rounded-xl shadow-card hover:shadow-lg transition-all duration-200;
+  }
+
+  /* Input enhancements */
+  .input-enhanced {
+    @apply bg-input border border-border rounded-lg px-4 py-2 text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200;
+  }
+
+  /* Sidebar enhancements */
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200;
+  }
+
+  .sidebar-item.active {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  /* Metric card enhancements */
+  .metric-card {
+    @apply bg-card border border-border rounded-xl p-6 shadow-card hover:shadow-lg transition-all duration-200;
+  }
+
+  /* Table enhancements */
+  .table-enhanced {
+    @apply w-full border-collapse;
+  }
+
+  .table-enhanced th {
+    @apply bg-muted text-muted-foreground font-medium px-6 py-4 text-left border-b border-border;
+  }
+
+  .table-enhanced td {
+    @apply px-6 py-4 border-b border-border text-foreground;
+  }
+
+  .table-enhanced tr:hover {
+    @apply bg-muted/50;
+  }
+
+  /* Responsive utilities */
+  .responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6;
+  }
+
+  .responsive-padding {
+    @apply p-4 sm:p-6 lg:p-8;
+  }
+
+  .responsive-text-lg {
+    @apply text-lg sm:text-xl lg:text-2xl xl:text-3xl;
+  }
+
+  /* Mobile-friendly touch targets */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Responsive container */
+  .container-responsive {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Mobile menu animations */
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  .animate-slide-out {
+    animation: slideOut 0.3s ease-in;
   }
 }
