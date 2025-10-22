@@ -1,5 +1,5 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
-import { Plus, Search, Filter, Edit, Trash2, Eye, CheckCircle, XCircle, Clock, FileText, User, Calendar, AlertTriangle, Building, MapPin, Users, Download, Send, DollarSign, Award, Target } from "lucide-react";
+import { Plus, Search, Filter, Edit, Trash2, Eye, CheckCircle, XCircle, Clock, FileText, User, Calendar, AlertTriangle, Building, MapPin, Users, Download, Send, DollarSign, Award, Target, TrendingUp, BarChart3, PieChart, Activity, Zap, Shield, Star, Rocket, Crown, Flame } from "lucide-react";
 import { useState } from "react";
 
 const BidProposal = () => {
@@ -132,18 +132,84 @@ const BidProposal = () => {
 
   return (
     <DashboardLayout>
-      <div className="p-8 space-y-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">Bid Proposal</h1>
-          <p className="text-muted-foreground mt-2">Manage and track your bid proposals</p>
+      <div className="p-4 sm:p-6 lg:p-8 space-y-8">
+        {/* Modern Header */}
+        <div className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-primary/5 to-ids-cyan/10 rounded-2xl p-6 sm:p-8 mb-8">
+          <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+          <div className="relative">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                <Award className="w-5 h-5 text-primary" />
+              </div>
+              <h1 className="text-2xl sm:text-4xl font-bold text-foreground bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+                Bid Proposals
+              </h1>
+            </div>
+            <p className="text-sm sm:text-lg text-muted-foreground mb-4">
+              Advanced proposal management with workflow automation and real-time collaboration
+            </p>
+            <div className="flex flex-wrap items-center gap-4 text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-muted-foreground">Live Updates</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Target className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground">Smart Analytics</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-ids-cyan" />
+                <span className="text-muted-foreground">Secure Workflow</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Breadcrumb */}
-        <div className="flex items-center text-sm text-muted-foreground mb-6">
-          <span>Home</span>
-          <span className="mx-2">&gt;</span>
-          <span className="text-foreground font-medium">Bid Proposal</span>
+        {/* Performance Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-green-500" />
+              </div>
+              <span className="text-xs font-medium text-green-500 bg-green-500/20 px-2 py-1 rounded-full">+12%</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground mb-1">$2.4M</div>
+            <div className="text-sm text-muted-foreground">Total Proposal Value</div>
+          </div>
+          
+          <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                <BarChart3 className="w-6 h-6 text-blue-500" />
+              </div>
+              <span className="text-xs font-medium text-blue-500 bg-blue-500/20 px-2 py-1 rounded-full">Active</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground mb-1">8</div>
+            <div className="text-sm text-muted-foreground">Active Proposals</div>
+          </div>
+          
+          <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                <PieChart className="w-6 h-6 text-purple-500" />
+              </div>
+              <span className="text-xs font-medium text-purple-500 bg-purple-500/20 px-2 py-1 rounded-full">75%</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground mb-1">6</div>
+            <div className="text-sm text-muted-foreground">Success Rate</div>
+          </div>
+          
+          <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center">
+                <Activity className="w-6 h-6 text-orange-500" />
+              </div>
+              <span className="text-xs font-medium text-orange-500 bg-orange-500/20 px-2 py-1 rounded-full">3</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground mb-1">2</div>
+            <div className="text-sm text-muted-foreground">Pending Reviews</div>
+          </div>
         </div>
 
         {/* Action Bar */}

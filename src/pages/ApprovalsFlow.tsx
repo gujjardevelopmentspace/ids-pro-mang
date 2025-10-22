@@ -1,6 +1,6 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
 import { useState, useEffect } from "react";
-import { Plus, Search, Filter, Edit, Trash2, Eye, CheckCircle, XCircle, Clock, AlertTriangle, TrendingUp, TrendingDown, BarChart3, PieChart, Activity, RefreshCw, Download, Upload, ArrowRight, ArrowDown, Users, Calendar, Shield, Target, Zap, Crown } from "lucide-react";
+import { Plus, Search, Filter, Edit, Trash2, Eye, CheckCircle, XCircle, Clock, AlertTriangle, TrendingUp, TrendingDown, BarChart3, PieChart, Activity, RefreshCw, Download, Upload, ArrowRight, ArrowDown, Users, Calendar, Shield, Target, Zap, Crown, Star, Rocket, Flame, Sparkles } from "lucide-react";
 
 const ApprovalsFlow = () => {
   const [approvalFlows, setApprovalFlows] = useState([
@@ -287,21 +287,96 @@ const ApprovalsFlow = () => {
 
   return (
     <DashboardLayout>
-      <div className="p-8 space-y-8">
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">Approvals Flow</h1>
-            <p className="text-muted-foreground mt-2">Manage and track approval workflows</p>
+      <div className="p-4 sm:p-6 lg:p-8 space-y-8">
+        {/* Modern Header */}
+        <div className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-primary/5 to-ids-cyan/10 rounded-2xl p-6 sm:p-8 mb-8">
+          <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+          <div className="relative">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                  <Shield className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <h1 className="text-2xl sm:text-4xl font-bold text-foreground bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+                    Approvals Flow
+                  </h1>
+                  <p className="text-sm sm:text-lg text-muted-foreground">
+                    Advanced workflow management with real-time tracking and automation
+                  </p>
+                </div>
+              </div>
+              <button 
+                onClick={refreshData}
+                disabled={isLoading}
+                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 disabled:opacity-50 transition-colors"
+              >
+                <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
+                {isLoading ? 'Refreshing...' : 'Refresh'}
+              </button>
+            </div>
+            <div className="flex flex-wrap items-center gap-4 text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-muted-foreground">Live Tracking</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Target className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground">Smart Automation</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-ids-cyan" />
+                <span className="text-muted-foreground">AI-Powered</span>
+              </div>
+            </div>
           </div>
-          <button 
-            onClick={refreshData}
-            disabled={isLoading}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 transition-colors"
-          >
-            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
-            {isLoading ? 'Refreshing...' : 'Refresh'}
-          </button>
+        </div>
+
+        {/* Workflow Analytics */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                <Activity className="w-6 h-6 text-blue-500" />
+              </div>
+              <span className="text-xs font-medium text-blue-500 bg-blue-500/20 px-2 py-1 rounded-full">Active</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground mb-1">12</div>
+            <div className="text-sm text-muted-foreground">Active Workflows</div>
+          </div>
+          
+          <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                <CheckCircle className="w-6 h-6 text-green-500" />
+              </div>
+              <span className="text-xs font-medium text-green-500 bg-green-500/20 px-2 py-1 rounded-full">92%</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground mb-1">105</div>
+            <div className="text-sm text-muted-foreground">Completed Approvals</div>
+          </div>
+          
+          <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center">
+                <Clock className="w-6 h-6 text-orange-500" />
+              </div>
+              <span className="text-xs font-medium text-orange-500 bg-orange-500/20 px-2 py-1 rounded-full">Pending</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground mb-1">25</div>
+            <div className="text-sm text-muted-foreground">Pending Reviews</div>
+          </div>
+          
+          <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-purple-500" />
+              </div>
+              <span className="text-xs font-medium text-purple-500 bg-purple-500/20 px-2 py-1 rounded-full">2.1d</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground mb-1">2.1</div>
+            <div className="text-sm text-muted-foreground">Avg. Processing Time</div>
+          </div>
         </div>
 
         {/* Breadcrumb */}

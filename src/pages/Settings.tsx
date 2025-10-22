@@ -1,5 +1,5 @@
 import { DashboardLayout } from "@/components/DashboardLayout";
-import { Upload, Trash2, Save, Eye, EyeOff } from "lucide-react";
+import { Upload, Trash2, Save, Eye, EyeOff, Settings as SettingsIcon, Shield, Bell, Palette, Globe, Database, Zap, Crown, Star, Rocket, Sparkles } from "lucide-react";
 import { useState } from "react";
 
 const Settings = () => {
@@ -14,17 +14,84 @@ const Settings = () => {
 
   return (
     <DashboardLayout>
-      <div className="p-8 space-y-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">Settings</h1>
+      <div className="p-4 sm:p-6 lg:p-8 space-y-8">
+        {/* Modern Header */}
+        <div className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-primary/5 to-ids-cyan/10 rounded-2xl p-6 sm:p-8 mb-8">
+          <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+          <div className="relative">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                <SettingsIcon className="w-5 h-5 text-primary" />
+              </div>
+              <h1 className="text-2xl sm:text-4xl font-bold text-foreground bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+                System Settings
+              </h1>
+            </div>
+            <p className="text-sm sm:text-lg text-muted-foreground mb-4">
+              Configure your system preferences, security settings, and customization options
+            </p>
+            <div className="flex flex-wrap items-center gap-4 text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-muted-foreground">Live Updates</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground">Secure Configuration</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-ids-cyan" />
+                <span className="text-muted-foreground">Advanced Options</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Breadcrumb */}
-        <div className="flex items-center text-sm text-muted-foreground mb-6">
-          <span>Home</span>
-          <span className="mx-2">&gt;</span>
-          <span className="text-foreground font-medium">Settings</span>
+        {/* Settings Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                <Palette className="w-6 h-6 text-blue-500" />
+              </div>
+              <span className="text-xs font-medium text-blue-500 bg-blue-500/20 px-2 py-1 rounded-full">Active</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground mb-1">Dark Teal</div>
+            <div className="text-sm text-muted-foreground">Current Theme</div>
+          </div>
+          
+          <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                <Shield className="w-6 h-6 text-green-500" />
+              </div>
+              <span className="text-xs font-medium text-green-500 bg-green-500/20 px-2 py-1 rounded-full">Secure</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground mb-1">High</div>
+            <div className="text-sm text-muted-foreground">Security Level</div>
+          </div>
+          
+          <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                <Bell className="w-6 h-6 text-purple-500" />
+              </div>
+              <span className="text-xs font-medium text-purple-500 bg-purple-500/20 px-2 py-1 rounded-full">Enabled</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground mb-1">8</div>
+            <div className="text-sm text-muted-foreground">Active Notifications</div>
+          </div>
+          
+          <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center">
+                <Database className="w-6 h-6 text-orange-500" />
+              </div>
+              <span className="text-xs font-medium text-orange-500 bg-orange-500/20 px-2 py-1 rounded-full">2.1GB</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground mb-1">85%</div>
+            <div className="text-sm text-muted-foreground">Storage Used</div>
+          </div>
         </div>
 
         {/* Brand Settings */}

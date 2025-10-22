@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Eye, EyeOff, Lock, Mail, Code, Users, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Eye, EyeOff, Lock, Mail, Code, Users, Zap, X, Send, Phone, MapPin } from "lucide-react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -8,6 +7,14 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    company: "",
+    message: ""
+  });
+  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,25 +47,47 @@ const Login = () => {
     }, 1000);
   };
 
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingContact(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      alert("Thank you for your interest! We'll contact you within 24 hours.");
+      setShowContactModal(false);
+      setContactForm({ name: "", email: "", company: "", message: "" });
+      setIsSubmittingContact(false);
+    }, 1500);
+  };
+
+  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setContactForm({
+      ...contactForm,
+      [e.target.name]: e.target.value
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <div className="w-full max-w-md mx-auto">
         {/* Logo and Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
-            <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center">
-              <Code className="w-8 h-8 text-primary-foreground" />
-            </div>
+            <img 
+              src="/ids-logo.png" 
+              alt="INVENTOR Design Studio Logo" 
+              className="w-16 h-16 object-contain"
+            />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Inventer Design Studio</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">INVENTOR Design Studio</h1>
           <p className="text-sm sm:text-base text-muted-foreground">Software Development House</p>
         </div>
 
         {/* Login Form */}
         <div className="bg-card border border-border rounded-xl p-6 sm:p-8 shadow-card">
           <div className="mb-6">
-            <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">Welcome Back</h2>
-            <p className="text-sm sm:text-base text-muted-foreground">Sign in to your developer account</p>
+            <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">Welcome Back!</h2>
+            <p className="text-sm sm:text-base text-muted-foreground">Ready to get back to work? Let's sign you in</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -128,7 +157,7 @@ const Login = () => {
               ) : (
                 <>
                   <Zap className="w-5 h-5" />
-                  Sign In
+                  Let's Go
                 </>
               )}
             </button>
@@ -136,7 +165,7 @@ const Login = () => {
 
           {/* Demo Credentials */}
           <div className="mt-8 p-4 bg-muted rounded-lg">
-            <h3 className="text-sm font-medium text-foreground mb-3">Demo Credentials</h3>
+            <h3 className="text-sm font-medium text-foreground mb-3">Try These Demo Accounts</h3>
             <div className="space-y-2 text-xs text-muted-foreground">
               <div className="flex justify-between">
                 <span>Admin:</span>
@@ -160,10 +189,13 @@ const Login = () => {
           {/* Footer Links */}
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-primary hover:text-primary/80 transition-colors">
-                Contact Admin
-              </Link>
+              New to the team?{" "}
+              <button 
+                onClick={() => setShowContactModal(true)}
+                className="text-primary hover:text-primary/80 transition-colors underline"
+              >
+                Get in touch with us
+              </button>
             </p>
           </div>
         </div>
@@ -187,6 +219,123 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      {/* Contact Admin Modal */}
+      {showContactModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-card border border-border rounded-xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-semibold text-foreground">Contact Admin</h2>
+              <button
+                onClick={() => setShowContactModal(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4 mb-6">
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                <Mail className="w-4 h-4" />
+                <span>admin@inventerdesign.com</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                <Phone className="w-4 h-4" />
+                <span>+1 (555) 123-4567</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                <MapPin className="w-4 h-4" />
+                <span>Software Development House</span>
+              </div>
+            </div>
+
+            <form onSubmit={handleContactSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={contactForm.name}
+                  onChange={handleContactChange}
+                  className="w-full px-3 py-2 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary"
+                  placeholder="Your full name"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={contactForm.email}
+                  onChange={handleContactChange}
+                  className="w-full px-3 py-2 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary"
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Company (Optional)
+                </label>
+                <input
+                  type="text"
+                  name="company"
+                  value={contactForm.company}
+                  onChange={handleContactChange}
+                  className="w-full px-3 py-2 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary"
+                  placeholder="Your company name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Message
+                </label>
+                <textarea
+                  name="message"
+                  value={contactForm.message}
+                  onChange={handleContactChange}
+                  rows={4}
+                  className="w-full px-3 py-2 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary focus:border-primary resize-none"
+                  placeholder="Tell us about your project requirements..."
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmittingContact}
+                className="w-full bg-primary text-primary-foreground py-2 px-4 rounded-lg font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
+              >
+                {isSubmittingContact ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin"></div>
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    Send Request
+                  </>
+                )}
+              </button>
+            </form>
+
+            <div className="mt-4 p-3 bg-muted rounded-lg">
+              <p className="text-xs text-muted-foreground text-center">
+                We'll review your request and create an account for you within 24 hours.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

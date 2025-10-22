@@ -5,9 +5,36 @@ const Reports = () => {
   return (
     <DashboardLayout>
       <div className="p-8 space-y-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">Reports</h1>
+        {/* Modern Header */}
+        <div className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-primary/5 to-ids-cyan/10 rounded-2xl p-6 sm:p-8 mb-8">
+          <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+          <div className="relative">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                <FileText className="w-5 h-5 text-primary" />
+              </div>
+              <h1 className="text-2xl sm:text-4xl font-bold text-foreground bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
+                Advanced Reports
+              </h1>
+            </div>
+            <p className="text-sm sm:text-lg text-muted-foreground mb-4">
+              Comprehensive analytics and insights with modern data visualization
+            </p>
+            <div className="flex flex-wrap items-center gap-4 text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-muted-foreground">Real-time Data</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground">Advanced Analytics</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Download className="w-4 h-4 text-ids-cyan" />
+                <span className="text-muted-foreground">Export Ready</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Breadcrumb */}
@@ -19,22 +46,43 @@ const Reports = () => {
 
         {/* Reports Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Clients Report */}
-          <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-shadow cursor-pointer">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6 text-blue-500" />
+          {/* Modern Clients Report */}
+          <div className="group bg-card rounded-2xl p-6 shadow-card hover:shadow-xl transition-all duration-300 border border-border/50 hover:border-primary/20 cursor-pointer">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-14 h-14 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                <Users className="w-7 h-7 text-blue-500" />
               </div>
-              <div>
-                <h3 className="font-semibold text-foreground">Clients Report</h3>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">Clients Report</h3>
                 <p className="text-sm text-muted-foreground">Client information and statistics</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="px-2 py-1 bg-blue-500/20 text-blue-500 text-xs font-medium rounded-full">Analytics</span>
+                  <span className="px-2 py-1 bg-green-500/20 text-green-500 text-xs font-medium rounded-full">Updated</span>
+                </div>
               </div>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Total Clients: 45</span>
-              <button className="p-2 hover:bg-muted rounded-lg transition-colors">
-                <Download className="w-4 h-4 text-blue-500" />
-              </button>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 bg-muted/30 rounded-xl">
+                <div>
+                  <p className="text-xs text-muted-foreground">Total Clients</p>
+                  <p className="text-2xl font-bold text-foreground">45</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-muted-foreground">Active</p>
+                  <p className="text-lg font-semibold text-green-500">38</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Calendar className="w-4 h-4" />
+                  <span>Last updated: 2 hours ago</span>
+                </div>
+                <button className="p-2 hover:bg-primary/20 rounded-lg transition-colors group/btn">
+                  <Download className="w-4 h-4 text-muted-foreground group-hover/btn:text-primary transition-colors" />
+                </button>
+              </div>
             </div>
           </div>
 

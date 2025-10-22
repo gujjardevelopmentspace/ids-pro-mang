@@ -140,27 +140,47 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         />
       )}
 
-      {/* Sidebar - Desktop & Mobile */}
+      {/* Modern Sidebar - Desktop & Mobile */}
       <aside className={`
         fixed lg:static inset-y-0 left-0 z-50
-        w-72 bg-sidebar border-r border-sidebar-border flex flex-col
-        transform transition-transform duration-300 ease-in-out
+        w-80 bg-sidebar border-r border-sidebar-border flex flex-col
+        transform transition-all duration-300 ease-in-out
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        shadow-2xl lg:shadow-none
       `}>
-        {/* Logo */}
-        <div className="p-4 lg:p-6 border-b border-sidebar-border">
+        {/* Modern Logo Section */}
+        <div className="p-6 border-b border-sidebar-border bg-gradient-to-r from-sidebar-background to-sidebar-accent/20">
           <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-primary rounded-lg flex items-center justify-center">
-                <svg viewBox="0 0 40 40" className="w-6 h-6 lg:w-8 lg:h-8" fill="none">
-                  <rect x="4" y="4" width="12" height="32" fill="currentColor" className="text-primary-foreground" />
-                  <rect x="20" y="4" width="4" height="32" fill="currentColor" className="text-primary-foreground" />
-                  <rect x="28" y="4" width="8" height="32" fill="currentColor" className="text-primary-foreground" />
-                </svg>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-lg border border-border/20 p-2">
+                <img 
+                  src="/ids-logo.png" 
+                  alt="INVENTOR Design Studio Logo" 
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    // Fallback to text logo if image fails to load
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                  }}
+                />
+                <div className="hidden flex items-center gap-1 text-black font-bold text-sm">
+                  <div className="relative">
+                    <span>i</span>
+                    <div className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-yellow-400 rounded-full"></div>
+                  </div>
+                  <span>d</span>
+                  <span className="text-gray-600">s</span>
+                </div>
               </div>
               <div>
-                <h1 className="text-base lg:text-xl font-bold text-sidebar-foreground">Inventer Design Studio</h1>
-                <p className="text-[10px] lg:text-xs text-muted-foreground">Software Development House</p>
+                <h1 className="text-lg font-bold text-sidebar-foreground bg-gradient-to-r from-sidebar-foreground to-primary bg-clip-text text-transparent">
+                  INVENTOR Design Studio
+                </h1>
+                <p className="text-xs text-muted-foreground">Software Development House</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs text-green-500 font-medium">Online</span>
+                </div>
               </div>
             </div>
             {/* Close button for mobile */}
@@ -173,39 +193,118 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           </div>
         </div>
 
-        {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          <NavItem icon="dashboard" label="Dashboard" href="/" />
-          <NavItem icon="dashboard" label="Dashboard 1" href="/dashboard1" />
-          <NavItem icon="inbox" label="My Pending Actions" href="/my-pending-actions" />
-          <NavItem icon="inventory" label="Code Repository Dashboard" href="/inventory-dashboard" />
-          <NavItem icon="graph" label="Live Analytics" href="/live-graphs" />
-          <NavItem icon="user-overview" label="Developer Overview" href="/user-overview" />
-          <NavItem icon="performance" label="Developer Performance" href="/users-performance" />
-          <NavItem icon="approvals" label="Code Review Flow" href="/approvals-flow" />
-          <NavItem icon="users" label="Development Team" href="/staff" />
-          <NavItem icon="site" label="Client Projects" href="/sites" />
-          <NavItem icon="documents" label="Documents" href="/documents" />
-          <NavItem icon="projects" label="Projects" href="/projects" />
-          <NavItem icon="items" label="Items" href="/items" />
-          <NavItem icon="drawing" label="Drawing Management Section" href="/drawing-management" />
-          <NavItem icon="bids" label="Bids" href="/bids" />
-          <NavItem icon="proposal" label="Bid Proposal" href="/bid-proposal" />
-          <NavItem icon="proposal-approvals" label="Bid Proposal Approvals" href="/bid-proposal-approvals" />
-          <NavItem icon="work-order" label="Work Order" href="/work-order" />
-          <NavItem icon="approved-work" label="Approved Work Order" href="/approved-work-order" />
-          <NavItem icon="planning" label="Planning" href="/planning" />
-          <NavItem icon="inspection" label="Inspection Requests" href="/inspection-requests" />
-          <NavItem icon="ir-approvals" label="IR Approvals" href="/ir-approvals" />
-          <NavItem icon="ipc" label="IPCs" href="/ipcs" />
-          <NavItem icon="ipc-approvals" label="IPC Approvals" href="/ipc-approvals" />
-          <NavItem icon="hse" label="HSE / Environment (Checklists & Reports)" href="/hse-environment" />
-          <NavItem icon="materials" label="Materials Section" href="/materials-section" />
-          <NavItem icon="assets" label="Assets Management Section" href="/assets-management" />
-          <NavItem icon="lab-tests" label="Lab Tests" href="/lab-tests" />
-          <NavItem icon="reports" label="Reports" href="/reports" />
-          <NavItem icon="query" label="Query Dashboard" href="/query-dashboard" />
-          <NavItem icon="settings" label="Settings" href="/settings" />
+        {/* Modern Navigation */}
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto scrollbar-hide">
+          {/* Dashboard Section */}
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
+              Overview
+            </h3>
+            <div className="space-y-1">
+              <NavItem icon="dashboard" label="Home" href="/" />
+              <NavItem icon="dashboard" label="Analytics" href="/dashboard1" />
+            </div>
+          </div>
+
+          {/* Project Management Section */}
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
+              Projects
+            </h3>
+            <div className="space-y-1">
+              <NavItem icon="projects" label="All Projects" href="/projects" />
+              <NavItem icon="site" label="Client Work" href="/sites" />
+              <NavItem icon="work-order" label="Work Orders" href="/work-order" />
+              <NavItem icon="approved-work" label="Completed Work" href="/approved-work-order" />
+              <NavItem icon="planning" label="Planning" href="/planning" />
+            </div>
+          </div>
+
+          {/* Team & Collaboration Section */}
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
+              Team
+            </h3>
+            <div className="space-y-1">
+              <NavItem icon="users" label="Our Team" href="/staff" />
+              <NavItem icon="user-overview" label="Team Overview" href="/user-overview" />
+              <NavItem icon="performance" label="How We're Doing" href="/users-performance" />
+              <NavItem icon="inbox" label="My Tasks" href="/my-pending-actions" />
+            </div>
+          </div>
+
+          {/* Quality & Approvals Section */}
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
+              Reviews & Approvals
+            </h3>
+            <div className="space-y-1">
+              <NavItem icon="approvals" label="Review Process" href="/approvals-flow" />
+              <NavItem icon="inspection" label="Inspection Requests" href="/inspection-requests" />
+              <NavItem icon="ir-approvals" label="IR Approvals" href="/ir-approvals" />
+              <NavItem icon="ipc" label="IPCs" href="/ipcs" />
+              <NavItem icon="ipc-approvals" label="IPC Approvals" href="/ipc-approvals" />
+            </div>
+          </div>
+
+          {/* Business & Bidding Section */}
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
+              Business
+            </h3>
+            <div className="space-y-1">
+              <NavItem icon="bids" label="Bids" href="/bids" />
+              <NavItem icon="proposal" label="Proposals" href="/bid-proposal" />
+              <NavItem icon="proposal-approvals" label="Proposal Reviews" href="/bid-proposal-approvals" />
+            </div>
+          </div>
+
+          {/* Resources & Assets Section */}
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
+              Resources
+            </h3>
+            <div className="space-y-1">
+              <NavItem icon="documents" label="Documents" href="/documents" />
+              <NavItem icon="drawing" label="Drawings" href="/drawing-management" />
+              <NavItem icon="materials" label="Materials" href="/materials-section" />
+              <NavItem icon="assets" label="Assets" href="/assets-management" />
+              <NavItem icon="inventory" label="Inventory" href="/inventory-dashboard" />
+            </div>
+          </div>
+
+          {/* Analytics & Reports Section */}
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
+              Analytics
+            </h3>
+            <div className="space-y-1">
+              <NavItem icon="graph" label="Live Data" href="/live-graphs" />
+              <NavItem icon="reports" label="Reports" href="/reports" />
+              <NavItem icon="query" label="Data Explorer" href="/query-dashboard" />
+            </div>
+          </div>
+
+          {/* Safety & Compliance Section */}
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
+              Safety
+            </h3>
+            <div className="space-y-1">
+              <NavItem icon="hse" label="HSE Environment" href="/hse-environment" />
+              <NavItem icon="lab-tests" label="Lab Tests" href="/lab-tests" />
+            </div>
+          </div>
+
+          {/* Settings Section */}
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
+              Settings
+            </h3>
+            <div className="space-y-1">
+              <NavItem icon="settings" label="Settings" href="/settings" />
+            </div>
+          </div>
         </nav>
       </aside>
 
@@ -223,7 +322,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               <Menu className="w-6 h-6 text-foreground" />
             </button>
             
-            <h2 className="text-lg lg:text-2xl font-semibold text-foreground">Inventer Design Studio</h2>
+            <h2 className="text-lg lg:text-2xl font-semibold text-foreground">INVENTOR Design Studio</h2>
             <div className="hidden xl:flex items-center gap-2 text-sm text-muted-foreground">
               <span className="text-primary">•</span>
               <span>Software Development House</span>
@@ -428,8 +527,25 @@ const NavItem = ({ icon, label, href, active }: NavItemProps) => {
 
   const content = (
     <>
-      <NavIcon type={icon} />
-      <span className="text-sm font-medium text-sidebar-foreground">{label}</span>
+      <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 ${
+        isActive 
+          ? "bg-primary text-primary-foreground shadow-lg" 
+          : "bg-sidebar-accent/30 text-sidebar-foreground group-hover:bg-primary/20 group-hover:text-primary"
+      }`}>
+        <NavIcon type={icon} />
+      </div>
+      <div className="flex-1 min-w-0">
+        <span className={`text-sm font-medium transition-colors ${
+          isActive 
+            ? "text-primary" 
+            : "text-sidebar-foreground group-hover:text-primary"
+        }`}>
+          {label}
+        </span>
+      </div>
+      {isActive && (
+        <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+      )}
     </>
   );
 
@@ -437,10 +553,10 @@ const NavItem = ({ icon, label, href, active }: NavItemProps) => {
     return (
       <Link
         to={href}
-        className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+        className={`group w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 ${
           isActive
-            ? "bg-sidebar-accent shadow-lg"
-            : "hover:bg-sidebar-accent/50"
+            ? "bg-sidebar-accent/50 border border-primary/20 shadow-lg"
+            : "hover:bg-sidebar-accent/30 hover:border-border/50 border border-transparent"
         }`}
       >
         {content}
@@ -450,10 +566,10 @@ const NavItem = ({ icon, label, href, active }: NavItemProps) => {
 
   return (
     <button
-      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+      className={`group w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 ${
         isActive
-          ? "bg-sidebar-accent shadow-lg"
-          : "hover:bg-sidebar-accent/50"
+          ? "bg-sidebar-accent/50 border border-primary/20 shadow-lg"
+          : "hover:bg-sidebar-accent/30 hover:border-border/50 border border-transparent"
       }`}
     >
       {content}

@@ -98,11 +98,11 @@ const Dashboard1 = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "In Stock": return "bg-green-100 text-green-700";
-      case "Available": return "bg-blue-100 text-blue-700";
-      case "Low Stock": return "bg-yellow-100 text-yellow-700";
-      case "Critical": return "bg-red-100 text-red-700";
-      default: return "bg-gray-100 text-gray-700";
+      case "In Stock": return "bg-green-500/20 text-green-400 border border-green-500/30";
+      case "Available": return "bg-blue-500/20 text-blue-400 border border-blue-500/30";
+      case "Low Stock": return "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30";
+      case "Critical": return "bg-red-500/20 text-red-400 border border-red-500/30";
+      default: return "bg-muted text-muted-foreground border border-border";
     }
   };
 
@@ -136,44 +136,44 @@ const Dashboard1 = () => {
   return (
     <DashboardLayout>
       {/* Top Header/Summary Bar */}
-      <div className="bg-white p-4 shadow-sm border-b border-gray-200">
+      <div className="bg-card p-4 shadow-card border-b border-border">
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center gap-4">
             <div className="flex items-center">
-              <span className="w-3 h-3 bg-blue-500 mr-2 rounded-full"></span>
-              <span className="text-sm font-medium">BOQ AMOUNT</span>
+              <span className="w-3 h-3 bg-ids-cyan mr-2 rounded-full"></span>
+              <span className="text-sm font-medium text-foreground">BOQ AMOUNT</span>
             </div>
             <div className="flex items-center">
-              <span className="w-3 h-3 bg-red-500 mr-2 rounded-full"></span>
-              <span className="text-sm font-medium">UNAPPROVED AMOUNT</span>
+              <span className="w-3 h-3 bg-orange-500 mr-2 rounded-full"></span>
+              <span className="text-sm font-medium text-foreground">UNAPPROVED AMOUNT</span>
             </div>
             <div className="flex items-center">
               <span className="w-3 h-3 bg-green-500 mr-2 rounded-full"></span>
-              <span className="text-sm font-medium">APPROVED AMOUNT</span>
+              <span className="text-sm font-medium text-foreground">APPROVED AMOUNT</span>
             </div>
           </div>
           <button 
             onClick={refreshData}
             disabled={isLoading}
-            className="flex items-center gap-2 px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600 disabled:opacity-50"
+            className="flex items-center gap-2 px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90 disabled:opacity-50"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
             Refresh
           </button>
         </div>
-        <div className="grid grid-cols-5 gap-px bg-gray-200 border border-gray-200 rounded-lg overflow-hidden">
-          <div className="bg-white p-3 text-sm font-medium text-gray-700">Project</div>
-          <div className="bg-white p-3 text-sm font-medium text-gray-700">Contract Amount</div>
-          <div className="bg-white p-3 text-sm font-medium text-gray-700">Work done Amount</div>
-          <div className="bg-white p-3 text-sm font-medium text-gray-700">APPROVED IPC AMOUNT</div>
-          <div className="bg-white p-3 text-sm font-medium text-gray-700">Remaining Amount</div>
+        <div className="grid grid-cols-5 gap-px bg-border border border-border rounded-lg overflow-hidden">
+          <div className="bg-muted p-3 text-sm font-medium text-muted-foreground">Project</div>
+          <div className="bg-muted p-3 text-sm font-medium text-muted-foreground">Contract Amount</div>
+          <div className="bg-muted p-3 text-sm font-medium text-muted-foreground">Work done Amount</div>
+          <div className="bg-muted p-3 text-sm font-medium text-muted-foreground">APPROVED IPC AMOUNT</div>
+          <div className="bg-muted p-3 text-sm font-medium text-muted-foreground">Remaining Amount</div>
         </div>
-        <div className="grid grid-cols-5 gap-px bg-gray-200 border border-gray-200 rounded-lg overflow-hidden mt-1">
-          <div className="bg-blue-50 p-3 text-sm font-medium text-gray-700">Downtown Office Complex</div>
-          <div className="bg-white p-3 text-sm font-medium text-gray-700">${projectData.contractAmount.toLocaleString()}</div>
-          <div className="bg-white p-3 text-sm font-medium text-gray-700">${projectData.workDoneAmount.toLocaleString()}</div>
-          <div className="bg-white p-3 text-sm font-medium text-gray-700">${projectData.approvedIpcAmount.toLocaleString()}</div>
-          <div className="bg-white p-3 text-sm font-medium text-gray-700">${projectData.remainingAmount.toLocaleString()}</div>
+        <div className="grid grid-cols-5 gap-px bg-border border border-border rounded-lg overflow-hidden mt-1">
+          <div className="bg-primary/10 p-3 text-sm font-medium text-foreground">Downtown Office Complex</div>
+          <div className="bg-card p-3 text-sm font-medium text-ids-cyan">${projectData.contractAmount.toLocaleString()}</div>
+          <div className="bg-card p-3 text-sm font-medium text-green-500">${projectData.workDoneAmount.toLocaleString()}</div>
+          <div className="bg-card p-3 text-sm font-medium text-ids-cyan">${projectData.approvedIpcAmount.toLocaleString()}</div>
+          <div className="bg-card p-3 text-sm font-medium text-blue-400">${projectData.remainingAmount.toLocaleString()}</div>
         </div>
       </div>
 
@@ -288,7 +288,7 @@ const Dashboard1 = () => {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
-                          <div className="w-20 bg-gray-200 rounded-full h-2">
+                          <div className="w-20 bg-muted rounded-full h-2">
                             <div 
                               className={`h-2 rounded-full ${
                                 material.consumption > 80 ? 'bg-red-500' :
