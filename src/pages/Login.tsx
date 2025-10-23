@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Eye, EyeOff, Lock, Mail, Code, Users, Zap, X, Send, Phone, MapPin } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
 
 const Login = () => {
+  const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -21,30 +23,14 @@ const Login = () => {
     setIsLoading(true);
     setError("");
 
-    // Demo credentials
-    const demoCredentials = [
-      { email: "admin@inventerdesign.com", password: "admin123", role: "Admin" },
-      { email: "developer@inventerdesign.com", password: "dev123", role: "Developer" },
-      { email: "manager@inventerdesign.com", password: "manager123", role: "Project Manager" },
-      { email: "client@inventerdesign.com", password: "client123", role: "Client" }
-    ];
-
-    // Simulate API call
-    setTimeout(() => {
-      const user = demoCredentials.find(
-        cred => cred.email === email && cred.password === password
-      );
-
-      if (user) {
-        // Store user session
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("isAuthenticated", "true");
-        window.location.href = "/";
-      } else {
-        setError("Invalid credentials. Please check your email and password.");
-      }
+    try {
+      await login(email, password);
+      // Redirect will be handled by the auth context
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Login failed. Please try again.");
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleContactSubmit = async (e: React.FormEvent) => {
@@ -68,8 +54,14 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="w-full max-w-md mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background flex items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-32 h-32 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-20 w-48 h-48 bg-ids-cyan/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-primary/5 to-ids-cyan/5 rounded-full blur-3xl animate-pulse delay-500"></div>
+      </div>
+      <div className="w-full max-w-md mx-auto relative z-10">
         {/* Logo and Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
@@ -84,7 +76,7 @@ const Login = () => {
         </div>
 
         {/* Login Form */}
-        <div className="bg-card border border-border rounded-xl p-6 sm:p-8 shadow-card">
+        <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl p-6 sm:p-8 shadow-2xl hover:shadow-3xl transition-all duration-300">
           <div className="mb-6">
             <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-2">Welcome Back!</h2>
             <p className="text-sm sm:text-base text-muted-foreground">Ready to get back to work? Let's sign you in</p>
@@ -164,25 +156,55 @@ const Login = () => {
           </form>
 
           {/* Demo Credentials */}
-          <div className="mt-8 p-4 bg-muted rounded-lg">
-            <h3 className="text-sm font-medium text-foreground mb-3">Try These Demo Accounts</h3>
-            <div className="space-y-2 text-xs text-muted-foreground">
-              <div className="flex justify-between">
-                <span>Admin:</span>
-                <span>admin@inventerdesign.com / admin123</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Developer:</span>
-                <span>developer@inventerdesign.com / dev123</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Manager:</span>
-                <span>manager@inventerdesign.com / manager123</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Client:</span>
-                <span>client@inventerdesign.com / client123</span>
-              </div>
+          <div className="mt-8 p-4 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <h3 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              Quick Demo Access
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                onClick={() => {
+                  setEmail('admin@inventerdesign.com');
+                  setPassword('admin123');
+                }}
+                className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200 text-left group"
+              >
+                <div className="font-medium text-sm text-gray-900 dark:text-gray-100">👑 Administrator</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Full system access</div>
+              </button>
+              <button
+                onClick={() => {
+                  setEmail('manager@inventerdesign.com');
+                  setPassword('manager123');
+                }}
+                className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200 text-left group"
+              >
+                <div className="font-medium text-sm text-gray-900 dark:text-gray-100">📊 Project Manager</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Team & project oversight</div>
+              </button>
+              <button
+                onClick={() => {
+                  setEmail('engineer@inventerdesign.com');
+                  setPassword('engineer123');
+                }}
+                className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200 text-left group"
+              >
+                <div className="font-medium text-sm text-gray-900 dark:text-gray-100">⚙️ Engineer</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Technical access</div>
+              </button>
+              <button
+                onClick={() => {
+                  setEmail('client@inventerdesign.com');
+                  setPassword('client123');
+                }}
+                className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200 text-left group"
+              >
+                <div className="font-medium text-sm text-gray-900 dark:text-gray-100">👤 Client</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Project visibility</div>
+              </button>
+            </div>
+            <div className="mt-3 text-xs text-gray-600 dark:text-gray-400 text-center">
+              Click any role above to auto-fill credentials
             </div>
           </div>
 

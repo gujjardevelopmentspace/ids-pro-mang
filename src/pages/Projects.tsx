@@ -61,59 +61,71 @@ const Projects = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {/* Construction Projects */}
-            <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-shadow cursor-pointer">
+            <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-all duration-200 cursor-pointer group active:scale-95 h-full flex flex-col">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                   <FolderOpen className="w-6 h-6 text-blue-500" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <h3 className="font-semibold text-foreground">Construction</h3>
                   <p className="text-sm text-muted-foreground">Building projects</p>
                 </div>
               </div>
-              <div className="text-2xl font-bold text-blue-500">8</div>
+              <div className="mt-auto">
+                <div className="text-2xl font-bold text-blue-500">8</div>
+                <div className="text-xs text-muted-foreground">Active Projects</div>
+              </div>
             </div>
 
             {/* Infrastructure Projects */}
-            <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-shadow cursor-pointer">
+            <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-all duration-200 cursor-pointer group active:scale-95 h-full flex flex-col">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                   <FolderOpen className="w-6 h-6 text-green-500" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <h3 className="font-semibold text-foreground">Infrastructure</h3>
                   <p className="text-sm text-muted-foreground">Roads, bridges, utilities</p>
                 </div>
               </div>
-              <div className="text-2xl font-bold text-green-500">5</div>
+              <div className="mt-auto">
+                <div className="text-2xl font-bold text-green-500">5</div>
+                <div className="text-xs text-muted-foreground">Active Projects</div>
+              </div>
             </div>
 
             {/* Residential Projects */}
-            <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-shadow cursor-pointer">
+            <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-all duration-200 cursor-pointer group active:scale-95 h-full flex flex-col">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                   <FolderOpen className="w-6 h-6 text-purple-500" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <h3 className="font-semibold text-foreground">Residential</h3>
                   <p className="text-sm text-muted-foreground">Housing developments</p>
                 </div>
               </div>
-              <div className="text-2xl font-bold text-purple-500">3</div>
+              <div className="mt-auto">
+                <div className="text-2xl font-bold text-purple-500">3</div>
+                <div className="text-xs text-muted-foreground">Active Projects</div>
+              </div>
             </div>
 
             {/* Commercial Projects */}
-            <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-shadow cursor-pointer">
+            <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-all duration-200 cursor-pointer group active:scale-95 h-full flex flex-col">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                   <FolderOpen className="w-6 h-6 text-orange-500" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <h3 className="font-semibold text-foreground">Commercial</h3>
                   <p className="text-sm text-muted-foreground">Office buildings, retail</p>
                 </div>
               </div>
-              <div className="text-2xl font-bold text-orange-500">4</div>
+              <div className="mt-auto">
+                <div className="text-2xl font-bold text-orange-500">4</div>
+                <div className="text-xs text-muted-foreground">Active Projects</div>
+              </div>
             </div>
           </div>
         </section>
@@ -126,195 +138,199 @@ const Projects = () => {
               <input 
                 type="text" 
                 placeholder="Search projects..." 
-                className="pl-10 pr-4 py-2 border border-border rounded-lg bg-background text-foreground w-full sm:w-64"
+                className="pl-10 pr-4 py-2 border border-border rounded-lg bg-background text-foreground w-full sm:w-64 focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200"
               />
             </div>
-            <select className="px-3 py-2 border border-border rounded-lg bg-background text-foreground w-full sm:w-auto">
+            <select className="px-3 py-2 border border-border rounded-lg bg-background text-foreground w-full sm:w-auto focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200">
               <option>All Projects</option>
               <option>Active Projects</option>
               <option>Completed Projects</option>
               <option>On Hold</option>
             </select>
-            <button className="flex items-center justify-center gap-2 px-3 py-2 border border-border rounded-lg hover:bg-muted transition-colors w-full sm:w-auto">
+            <button className="flex items-center justify-center gap-2 px-3 py-2 border border-border rounded-lg hover:bg-muted transition-all duration-200 w-full sm:w-auto active:scale-95">
               <Filter className="w-4 h-4" />
               Filter
             </button>
           </div>
           
-          <button className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors w-full sm:w-auto">
+          <button className="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 w-full sm:w-auto active:scale-95 shadow-md hover:shadow-lg">
             <Plus className="w-4 h-4" />
             Create Project
           </button>
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-          {/* Modern Project Card 1 */}
-          <div className="group bg-card rounded-2xl p-6 shadow-card hover:shadow-xl transition-all duration-300 border border-border/50 hover:border-primary/20">
-            <div className="flex items-start justify-between mb-6">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                  <FolderOpen className="w-7 h-7 text-blue-500" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">Downtown Office Complex</h3>
-                  <p className="text-sm text-muted-foreground">Construction Project</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="px-2 py-1 bg-green-500/20 text-green-500 text-xs font-medium rounded-full">Active</span>
-                    <span className="px-2 py-1 bg-blue-500/20 text-blue-500 text-xs font-medium rounded-full">High Priority</span>
-                  </div>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {/* Downtown Office Complex */}
+          <div className="bg-card rounded-xl p-6 border border-border hover:shadow-lg transition-all duration-200 cursor-pointer group active:scale-95 h-full flex flex-col bg-gradient-to-br from-card to-card/80 hover:from-card/90 hover:to-card/70">
+            {/* Header */}
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors text-lg mb-1">Downtown Office Complex</h3>
+                <p className="text-sm text-muted-foreground">Construction Project</p>
               </div>
-              <div className="flex items-center gap-1">
-                <button className="p-2 hover:bg-muted rounded-lg transition-colors group/btn">
-                  <Eye className="w-4 h-4 text-muted-foreground group-hover/btn:text-primary transition-colors" />
-                </button>
-                <button className="p-2 hover:bg-muted rounded-lg transition-colors group/btn">
-                  <Edit className="w-4 h-4 text-muted-foreground group-hover/btn:text-primary transition-colors" />
-                </button>
-                <button className="p-2 hover:bg-red-500/20 rounded-lg transition-colors group/btn">
-                  <Trash2 className="w-4 h-4 text-muted-foreground group-hover/btn:text-red-500 transition-colors" />
-                </button>
+              <div className="flex flex-col items-end gap-2 ml-3">
+                <span className="px-3 py-1 bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300 rounded-full text-xs font-medium">
+                  Active
+                </span>
+                <span className="px-2 py-1 bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300 rounded-full text-xs font-medium">
+                  High Priority
+                </span>
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-              <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-xl">
-                <Calendar className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Start Date</p>
-                  <p className="text-sm font-medium text-foreground">Jan 15, 2024</p>
-                </div>
+            {/* Project Details */}
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Start Date</p>
+                <p className="text-sm font-medium text-foreground">Jan 15, 2024</p>
               </div>
-              <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-xl">
-                <Users className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Team Size</p>
-                  <p className="text-sm font-medium text-foreground">25 members</p>
-                </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Team Size</p>
+                <p className="text-sm font-medium text-foreground">25 members</p>
               </div>
-              <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-xl">
-                <DollarSign className="w-5 h-5 text-primary" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Budget</p>
-                  <p className="text-sm font-medium text-foreground">$2.5M</p>
-                </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Budget</p>
+                <p className="text-sm font-medium text-foreground">$2.5M</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Expected</p>
+                <p className="text-sm font-medium text-foreground">Dec 2024</p>
               </div>
             </div>
             
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
+            {/* Progress Section */}
+            <div className="mb-4">
+              <div className="flex justify-between items-center mb-2">
                 <span className="text-sm font-medium text-foreground">Project Progress</span>
-                <span className="text-sm font-bold text-green-500">65%</span>
+                <span className="text-sm font-bold text-primary">65%</span>
               </div>
               <div className="w-full bg-muted rounded-full h-3">
-                <div className="bg-gradient-to-r from-green-500 to-green-400 h-3 rounded-full transition-all duration-500" style={{width: '65%'}}></div>
+                <div className="bg-primary h-3 rounded-full transition-all duration-500" style={{width: '65%'}}></div>
               </div>
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
+            </div>
+            
+            {/* Footer */}
+            <div className="mt-auto pt-4 border-t border-border">
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
                 <span>Started</span>
                 <span>Expected: Dec 2024</span>
               </div>
             </div>
           </div>
 
-          {/* Project Card 2 */}
-          <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-shadow">
+          {/* Highway Expansion */}
+          <div className="bg-card rounded-xl p-6 border border-border hover:shadow-lg transition-all duration-200 cursor-pointer group active:scale-95 h-full flex flex-col bg-gradient-to-br from-card to-card/80 hover:from-card/90 hover:to-card/70">
+            {/* Header */}
             <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                  <FolderOpen className="w-6 h-6 text-green-500" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">Highway Expansion</h3>
-                  <p className="text-sm text-muted-foreground">Infrastructure</p>
-                </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors text-lg mb-1">Highway Expansion</h3>
+                <p className="text-sm text-muted-foreground">Infrastructure</p>
               </div>
-              <div className="flex items-center gap-2">
-                <button className="p-2 hover:bg-muted rounded-lg transition-colors">
-                  <Eye className="w-4 h-4 text-muted-foreground" />
-                </button>
-                <button className="p-2 hover:bg-muted rounded-lg transition-colors">
-                  <Edit className="w-4 h-4 text-muted-foreground" />
-                </button>
-                <button className="p-2 hover:bg-muted rounded-lg transition-colors">
-                  <Trash2 className="w-4 h-4 text-red-500" />
-                </button>
+              <div className="flex flex-col items-end gap-2 ml-3">
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300 rounded-full text-xs font-medium">
+                  In Progress
+                </span>
+                <span className="px-2 py-1 bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300 rounded-full text-xs font-medium">
+                  High Priority
+                </span>
               </div>
             </div>
             
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Start: Feb 20, 2024</span>
+            {/* Project Details */}
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Start Date</p>
+                <p className="text-sm font-medium text-foreground">Feb 20, 2024</p>
               </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Team: 18 members</span>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Team Size</p>
+                <p className="text-sm font-medium text-foreground">18 members</p>
               </div>
-              <div className="flex items-center gap-2">
-                <DollarSign className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Budget: $5.2M</span>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Budget</p>
+                <p className="text-sm font-medium text-foreground">$5.2M</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Expected</p>
+                <p className="text-sm font-medium text-foreground">Mar 2025</p>
               </div>
             </div>
             
-            <div className="mt-4 pt-4 border-t border-border">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-yellow-600">In Progress</span>
-                <span className="text-sm text-muted-foreground">Progress: 45%</span>
+            {/* Progress Section */}
+            <div className="mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm font-medium text-foreground">Project Progress</span>
+                <span className="text-sm font-bold text-blue-500">45%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                <div className="bg-yellow-500 h-2 rounded-full" style={{width: '45%'}}></div>
+              <div className="w-full bg-muted rounded-full h-3">
+                <div className="bg-blue-500 h-3 rounded-full transition-all duration-500" style={{width: '45%'}}></div>
+              </div>
+            </div>
+            
+            {/* Footer */}
+            <div className="mt-auto pt-4 border-t border-border">
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <span>Started</span>
+                <span>Expected: Mar 2025</span>
               </div>
             </div>
           </div>
 
-          {/* Project Card 3 */}
-          <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-shadow">
+          {/* Residential Complex */}
+          <div className="bg-card rounded-xl p-6 border border-border hover:shadow-lg transition-all duration-200 cursor-pointer group active:scale-95 h-full flex flex-col bg-gradient-to-br from-card to-card/80 hover:from-card/90 hover:to-card/70">
+            {/* Header */}
             <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <FolderOpen className="w-6 h-6 text-purple-500" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">Residential Complex</h3>
-                  <p className="text-sm text-muted-foreground">Residential</p>
-                </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors text-lg mb-1">Residential Complex</h3>
+                <p className="text-sm text-muted-foreground">Residential</p>
               </div>
-              <div className="flex items-center gap-2">
-                <button className="p-2 hover:bg-muted rounded-lg transition-colors">
-                  <Eye className="w-4 h-4 text-muted-foreground" />
-                </button>
-                <button className="p-2 hover:bg-muted rounded-lg transition-colors">
-                  <Edit className="w-4 h-4 text-muted-foreground" />
-                </button>
-                <button className="p-2 hover:bg-muted rounded-lg transition-colors">
-                  <Trash2 className="w-4 h-4 text-red-500" />
-                </button>
+              <div className="flex flex-col items-end gap-2 ml-3">
+                <span className="px-3 py-1 bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300 rounded-full text-xs font-medium">
+                  On Hold
+                </span>
+                <span className="px-2 py-1 bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300 rounded-full text-xs font-medium">
+                  Medium Priority
+                </span>
               </div>
             </div>
             
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Start: Mar 10, 2024</span>
+            {/* Project Details */}
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Start Date</p>
+                <p className="text-sm font-medium text-foreground">Mar 10, 2024</p>
               </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Team: 32 members</span>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Team Size</p>
+                <p className="text-sm font-medium text-foreground">32 members</p>
               </div>
-              <div className="flex items-center gap-2">
-                <DollarSign className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Budget: $8.1M</span>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Budget</p>
+                <p className="text-sm font-medium text-foreground">$8.1M</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Expected</p>
+                <p className="text-sm font-medium text-foreground">Jun 2025</p>
               </div>
             </div>
             
-            <div className="mt-4 pt-4 border-t border-border">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-red-600">On Hold</span>
-                <span className="text-sm text-muted-foreground">Progress: 20%</span>
+            {/* Progress Section */}
+            <div className="mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm font-medium text-foreground">Project Progress</span>
+                <span className="text-sm font-bold text-yellow-500">20%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                <div className="bg-red-500 h-2 rounded-full" style={{width: '20%'}}></div>
+              <div className="w-full bg-muted rounded-full h-3">
+                <div className="bg-yellow-500 h-3 rounded-full transition-all duration-500" style={{width: '20%'}}></div>
+              </div>
+            </div>
+            
+            {/* Footer */}
+            <div className="mt-auto pt-4 border-t border-border">
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <span>Started</span>
+                <span>Expected: Jun 2025</span>
               </div>
             </div>
           </div>
@@ -325,29 +341,29 @@ const Projects = () => {
           <h2 className="text-2xl font-bold text-foreground mb-6">Project Statistics</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="bg-card rounded-xl p-6 shadow-card">
-              <div className="text-center">
+            <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-all duration-200 cursor-pointer group active:scale-95 h-full flex flex-col">
+              <div className="text-center flex-1 flex flex-col justify-center">
                 <div className="text-3xl font-bold text-blue-500 mb-2">20</div>
                 <div className="text-sm text-muted-foreground">Total Projects</div>
               </div>
             </div>
             
-            <div className="bg-card rounded-xl p-6 shadow-card">
-              <div className="text-center">
+            <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-all duration-200 cursor-pointer group active:scale-95 h-full flex flex-col">
+              <div className="text-center flex-1 flex flex-col justify-center">
                 <div className="text-3xl font-bold text-green-500 mb-2">12</div>
                 <div className="text-sm text-muted-foreground">Active Projects</div>
               </div>
             </div>
             
-            <div className="bg-card rounded-xl p-6 shadow-card">
-              <div className="text-center">
+            <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-all duration-200 cursor-pointer group active:scale-95 h-full flex flex-col">
+              <div className="text-center flex-1 flex flex-col justify-center">
                 <div className="text-3xl font-bold text-yellow-500 mb-2">5</div>
                 <div className="text-sm text-muted-foreground">In Progress</div>
               </div>
             </div>
             
-            <div className="bg-card rounded-xl p-6 shadow-card">
-              <div className="text-center">
+            <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-all duration-200 cursor-pointer group active:scale-95 h-full flex flex-col">
+              <div className="text-center flex-1 flex flex-col justify-center">
                 <div className="text-3xl font-bold text-purple-500 mb-2">3</div>
                 <div className="text-sm text-muted-foreground">Completed</div>
               </div>

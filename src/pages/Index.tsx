@@ -1,4 +1,5 @@
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { ModernDashboardWrapper } from "@/components/ModernDashboardWrapper";
+import { WelcomeMessage } from "@/components/WelcomeMessage";
 import { 
   MetricCard, 
   PieChartIcon, 
@@ -11,6 +12,7 @@ import {
 import { LineChart } from "@/components/LineChart";
 import { Calendar } from "@/components/Calendar";
 import { useState, useEffect } from "react";
+import { analyticsApi, projectApi, userApi } from "../services/realApi";
 import { 
   TrendingUp, 
   TrendingDown, 
@@ -116,56 +118,117 @@ const Index = () => {
 
   const refreshData = async () => {
     setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Try to load real dashboard statistics, but fallback to mock data if API is not available
+      try {
+        const stats = await analyticsApi.getDashboardStats();
+        
+        // Update work order data with real data
+        setWorkOrderData({
+          totalAmount: stats.totalRevenue,
+          approvedAmount: stats.monthlyRevenue,
+          underProcessAmount: stats.totalRevenue - stats.monthlyRevenue
+        });
+
+        // Load real projects data
+        const projectsResponse = await projectApi.getProjects(1, 10);
+        setQuickStats(prev => ({
+          ...prev,
+          activeProjects: projectsResponse.projects.length,
+          completedTasks: projectsResponse.projects.filter(p => p.status === 'completed').length
+        }));
+
+        // Load real users data
+        const usersResponse = await userApi.getUsers(1, 10);
+        setQuickStats(prev => ({
+          ...prev,
+          teamMembers: usersResponse.total
+        }));
+      } catch (apiError) {
+        console.log('API not available, using mock data:', apiError);
+        // Use mock data when API is not available
+        setWorkOrderData({
+          totalAmount: 2500000,
+          approvedAmount: 1800000,
+          underProcessAmount: 700000
+        });
+        
+        setQuickStats(prev => ({
+          ...prev,
+          activeProjects: 8,
+          completedTasks: 24,
+          teamMembers: 25
+        }));
+      }
+
+    } catch (error) {
+      console.error('Error refreshing data:', error);
+      // Fallback to mock data if API fails
       setWorkOrderData(prev => ({
         totalAmount: prev.totalAmount + Math.floor(Math.random() * 10000),
         approvedAmount: prev.approvedAmount + Math.floor(Math.random() * 5000),
         underProcessAmount: prev.underProcessAmount + Math.floor(Math.random() * 3000)
       }));
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
-  useEffect(() => {
-    // Simulate real-time updates with realistic patterns
-    const interval = setInterval(() => {
-      // Only update the most recent data point
-      setChartData(prev => {
-        const newData = [...prev];
-        const lastIndex = newData.length - 1;
-        const dayOfWeek = new Date(newData[lastIndex].date).getDay();
-        const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-        const increment = isWeekend ? 
-          Math.floor(Math.random() * 3) : 
-          Math.floor(Math.random() * 5) + 1;
-        newData[lastIndex] = {
-          ...newData[lastIndex],
-          value: newData[lastIndex].value + increment
-        };
-        return newData;
-      });
+  // Real-time updates using WebSocket (temporarily disabled)
+  // useRealTime('project_update', (update: any) => {
+  //   console.log('Project update received:', update);
+  //   // Refresh data when project updates occur
+  //   refreshData();
+  // });
 
-      // Update payment data realistically
-      setCheckRequestData(prev => {
-        const newData = [...prev];
-        const lastIndex = newData.length - 1;
-        const dayOfWeek = new Date(newData[lastIndex].date).getDay();
-        const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-        const increment = isWeekend ? 0 : Math.floor(Math.random() * 15000) + 5000;
-        newData[lastIndex] = {
-          ...newData[lastIndex],
-          value: newData[lastIndex].value + increment
-        };
-        return newData;
-      });
-    }, 10000); // Update every 10 seconds
+  // useRealTime('user_activity', (activity: any) => {
+  //   console.log('User activity received:', activity);
+  //   // Update recent activities
+  //   setRecentActivities(prev => [
+  //     {
+  //       id: Date.now(),
+  //       type: activity.action,
+  //       message: `${activity.action} on ${activity.resource}`,
+  //       time: 'Just now',
+  //       status: 'info',
+  //       priority: 'medium'
+  //     },
+  //     ...prev.slice(0, 4) // Keep only 5 most recent
+  //   ]);
+  // });
+
+  // useRealTime('notification', (notification: any) => {
+  //   console.log('Notification received:', notification);
+  //   // Update recent activities with notification
+  //   setRecentActivities(prev => [
+  //     {
+  //       id: Date.now(),
+  //       type: 'notification',
+  //       message: notification.title,
+  //       time: 'Just now',
+  //       status: notification.type,
+  //       priority: notification.priority || 'medium'
+  //     },
+  //     ...prev.slice(0, 4)
+  //   ]);
+  // });
+
+  useEffect(() => {
+    // Load initial data
+    refreshData();
+    
+    // Set up periodic refresh as fallback
+    const interval = setInterval(() => {
+      refreshData();
+    }, 300000); // Refresh every 5 minutes as fallback
 
     return () => clearInterval(interval);
   }, []);
   return (
-    <DashboardLayout>
+    <ModernDashboardWrapper>
       <div className="p-4 sm:p-6 lg:p-8 space-y-8 lg:space-y-12">
+          {/* Welcome Message */}
+          <WelcomeMessage />
         {/* Modern Header with Enhanced Features */}
         <div className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-primary/5 to-ids-cyan/10 rounded-2xl p-6 sm:p-8 mb-8">
           <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
@@ -507,7 +570,7 @@ const Index = () => {
           </div>
         </section>
       </div>
-    </DashboardLayout>
+    </ModernDashboardWrapper>
   );
 };
 
