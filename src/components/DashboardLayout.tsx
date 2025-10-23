@@ -1,6 +1,11 @@
 import { Bell, ChevronDown, LogOut, CheckCircle, AlertTriangle, Info, Clock, X, Menu } from "lucide-react";
 import { ReactNode, useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, Navigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { Onboarding } from "./Onboarding";
+import { HelpSystem } from "./HelpSystem";
+import { UserFriendlyNotifications } from "./UserFriendlyNotifications";
+import { MobileOptimized } from "./MobileOptimized";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -16,9 +21,11 @@ interface Notification {
 }
 
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+  const { user, organization, logout, isAuthenticated } = useAuth();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([
     {
       id: 1,
@@ -62,17 +69,15 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     }
   ]);
 
-  // Get user data from localStorage
-  const userData = JSON.parse(localStorage.getItem("user") || "{}");
-  const userName = userData.email ? userData.email.split("@")[0].toUpperCase() : "USER";
-  const userRole = userData.role || "Developer";
+  // Authentication is handled by RoleBasedRoute, so we don't need to check here
+
+  const userName = user.name || user.email.split("@")[0];
+  const userRole = user.role;
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("isAuthenticated");
-    window.location.href = "/login";
+    logout();
   };
 
   const markAsRead = (id: number) => {
@@ -129,6 +134,14 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
+
+  // Check if user needs onboarding
+  useEffect(() => {
+    const hasCompletedOnboarding = localStorage.getItem('onboarding_completed');
+    if (!hasCompletedOnboarding && user) {
+      setShowOnboarding(true);
+    }
+  }, [user]);
 
   return (
     <div className="flex h-screen bg-background overflow-hidden">
@@ -203,6 +216,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             <div className="space-y-1">
               <NavItem icon="dashboard" label="Home" href="/" />
               <NavItem icon="dashboard" label="Analytics" href="/dashboard1" />
+              <NavItem icon="dashboard" label="Enhanced Dashboard" href="/enhanced-dashboard" />
             </div>
           </div>
 
@@ -230,6 +244,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               <NavItem icon="user-overview" label="Team Overview" href="/user-overview" />
               <NavItem icon="performance" label="How We're Doing" href="/users-performance" />
               <NavItem icon="inbox" label="My Tasks" href="/my-pending-actions" />
+              <NavItem icon="users" label="User Management" href="/user-management" />
             </div>
           </div>
 
@@ -296,6 +311,18 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             </div>
           </div>
 
+          {/* Enterprise Features Section */}
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
+              Enterprise
+            </h3>
+            <div className="space-y-1">
+              <NavItem icon="building" label="Organizations" href="/organization-management" />
+              <NavItem icon="users" label="Real-time Collaboration" href="/real-time-collaboration" />
+              <NavItem icon="bell" label="Advanced Notifications" href="/advanced-notifications" />
+            </div>
+          </div>
+
           {/* Settings Section */}
           <div className="mb-6">
             <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
@@ -330,120 +357,11 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           </div>
           
           <div className="flex items-center gap-2 lg:gap-4">
-            {/* Notifications */}
-            <div className="relative">
-              <button 
-                onClick={() => setShowNotifications(!showNotifications)}
-                className="notification-button relative p-2 hover:bg-muted rounded-lg transition-colors"
-              >
-                <Bell className="w-5 h-5 text-foreground" />
-                {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center">
-                    <span className="text-xs text-primary-foreground font-medium">{unreadCount}</span>
-                  </span>
-                )}
-              </button>
-
-              {/* Notifications Dropdown */}
-              {showNotifications && (
-                <div className="notification-dropdown absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] sm:w-96 bg-card border border-border rounded-lg shadow-lg z-50 max-h-[600px] overflow-hidden flex flex-col">
-                  {/* Header */}
-                  <div className="p-4 border-b border-border flex items-center justify-between">
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground">Notifications</h3>
-                      <p className="text-xs text-muted-foreground">{unreadCount} unread notifications</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {unreadCount > 0 && (
-                        <button
-                          onClick={markAllAsRead}
-                          className="text-xs text-primary hover:text-primary/80 transition-colors"
-                        >
-                          Mark all read
-                        </button>
-                      )}
-                      {notifications.length > 0 && (
-                        <button
-                          onClick={clearAll}
-                          className="text-xs text-destructive hover:text-destructive/80 transition-colors"
-                        >
-                          Clear all
-                        </button>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Notifications List */}
-                  <div className="flex-1 overflow-y-auto">
-                    {notifications.length === 0 ? (
-                      <div className="p-8 text-center">
-                        <Bell className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-                        <p className="text-sm text-muted-foreground">No notifications</p>
-                        <p className="text-xs text-muted-foreground mt-1">You're all caught up!</p>
-                      </div>
-                    ) : (
-                      <div className="divide-y divide-border">
-                        {notifications.map((notification) => (
-                          <div
-                            key={notification.id}
-                            className={`p-4 hover:bg-muted/50 transition-colors cursor-pointer ${
-                              !notification.read ? 'bg-muted/30' : ''
-                            }`}
-                            onClick={() => markAsRead(notification.id)}
-                          >
-                            <div className="flex items-start gap-3">
-                              <div className="flex-shrink-0 mt-1">
-                                {getNotificationIcon(notification.type)}
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-start justify-between gap-2">
-                                  <h4 className={`text-sm font-medium ${
-                                    !notification.read ? 'text-foreground' : 'text-muted-foreground'
-                                  }`}>
-                                    {notification.title}
-                                  </h4>
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      deleteNotification(notification.id);
-                                    }}
-                                    className="p-1 hover:bg-muted rounded transition-colors"
-                                  >
-                                    <X className="w-3 h-3 text-muted-foreground" />
-                                  </button>
-                                </div>
-                                <p className="text-xs text-muted-foreground mt-1">
-                                  {notification.message}
-                                </p>
-                                <div className="flex items-center gap-2 mt-2">
-                                  <span className="text-xs text-muted-foreground">{notification.time}</span>
-                                  {!notification.read && (
-                                    <span className="w-2 h-2 bg-primary rounded-full"></span>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Footer */}
-                  {notifications.length > 0 && (
-                    <div className="p-3 border-t border-border">
-                      <Link
-                        to="/my-pending-actions"
-                        onClick={() => setShowNotifications(false)}
-                        className="block text-center text-sm text-primary hover:text-primary/80 transition-colors"
-                      >
-                        View all pending actions →
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+            {/* User-Friendly Notifications */}
+            <UserFriendlyNotifications />
+            
+            {/* Help System */}
+            <HelpSystem />
             
             {/* User Menu */}
             <div className="relative">
@@ -510,6 +428,14 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           {children}
         </main>
       </div>
+
+      {/* Onboarding */}
+      {showOnboarding && (
+        <Onboarding onComplete={() => setShowOnboarding(false)} />
+      )}
+
+      {/* Mobile Optimization */}
+      <MobileOptimized />
     </div>
   );
 };
@@ -815,6 +741,25 @@ const NavIcon = ({ type }: { type: string }) => {
         <svg className={iconClass} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
           <circle cx="12" cy="12" r="3" />
+        </svg>
+      );
+    case "building":
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
+          <path d="M6 12H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+          <path d="M18 9h2a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-2" />
+          <path d="M10 6h4" />
+          <path d="M10 10h4" />
+          <path d="M10 14h4" />
+          <path d="M10 18h4" />
+        </svg>
+      );
+    case "bell":
+      return (
+        <svg className={iconClass} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
         </svg>
       );
     default:

@@ -8,91 +8,92 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Inventer Design Studio Color System - Dark Teal Theme */
-    --background: 180 50% 6%; /* #0A1F1F - Deep Dark Teal */
-    --foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
+    /* INVENTOR Design Studio Theme - Based on Logo Colors */
+    --background: 0 0% 10%; /* #1A1A1A - Primary Dark from logo */
+    --foreground: 0 0% 98%; /* #FAFAFA - Pure White */
 
-    --card: 180 40% 8%; /* #0D2626 - Slightly Lighter Dark Teal */
-    --card-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
+    --card: 0 0% 12%; /* #1F1F1F - Slightly lighter dark */
+    --card-foreground: 0 0% 98%; /* #FAFAFA - Pure White */
 
-    --popover: 180 40% 8%; /* #0D2626 - Slightly Lighter Dark Teal */
-    --popover-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
+    --popover: 0 0% 12%; /* #1F1F1F - Slightly lighter dark */
+    --popover-foreground: 0 0% 98%; /* #FAFAFA - Pure White */
 
-    --primary: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
-    --primary-foreground: 0 0% 100%; /* #FFFFFF - White */
+    --primary: 60 100% 50%; /* #DFFF00 - Vibrant Yellow-Green from logo */
+    --primary-foreground: 0 0% 10%; /* #1A1A1A - Dark text on bright background */
 
-    --secondary: 180 35% 15%; /* #1A3D3D - Medium Dark Teal */
-    --secondary-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
+    --secondary: 0 0% 20%; /* #333333 - Secondary Dark from logo */
+    --secondary-foreground: 0 0% 98%; /* #FAFAFA - Pure White */
 
-    --muted: 180 30% 12%; /* #152E2E - Muted Dark Teal */
-    --muted-foreground: 180 10% 65%; /* #9BA8A8 - Muted Light Teal */
+    --muted: 0 0% 15%; /* #262626 - Muted Dark */
+    --muted-foreground: 0 0% 65%; /* #A6A6A6 - Light Gray */
 
-    --accent: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
-    --accent-foreground: 0 0% 100%; /* #FFFFFF - White */
+    --accent: 60 100% 50%; /* #DFFF00 - Vibrant Yellow-Green from logo */
+    --accent-foreground: 0 0% 10%; /* #1A1A1A - Dark text on bright background */
 
-    --destructive: 0 72% 51%; /* #DD3333 - Red for errors */
+    --destructive: 0 84% 60%; /* #EF4444 - Modern Red */
     --destructive-foreground: 0 0% 100%; /* #FFFFFF - White */
 
-    --border: 180 30% 20%; /* #243D3D - Darker Teal Border */
-    --input: 180 40% 10%; /* #0F2828 - Dark Teal Input Background */
-    --ring: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
+    --border: 0 0% 25%; /* #404040 - Border Gray */
+    --input: 0 0% 15%; /* #262626 - Input Background */
+    --ring: 60 100% 50%; /* #DFFF00 - Vibrant Yellow-Green from logo */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 180 45% 7%; /* #0B2222 - Sidebar Dark Teal */
-    --sidebar-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
-    --sidebar-primary: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
-    --sidebar-primary-foreground: 0 0% 100%; /* #FFFFFF - White */
-    --sidebar-accent: 180 35% 15%; /* #1A3D3D - Medium Dark Teal */
-    --sidebar-accent-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
-    --sidebar-border: 180 30% 20%; /* #243D3D - Darker Teal Border */
-    --sidebar-ring: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
+    --sidebar-background: 0 0% 8%; /* #141414 - Darker for sidebar */
+    --sidebar-foreground: 0 0% 98%; /* #FAFAFA - Pure White */
+    --sidebar-primary: 60 100% 50%; /* #DFFF00 - Vibrant Yellow-Green from logo */
+    --sidebar-primary-foreground: 0 0% 10%; /* #1A1A1A - Dark text on bright background */
+    --sidebar-accent: 0 0% 20%; /* #333333 - Secondary Dark */
+    --sidebar-accent-foreground: 0 0% 98%; /* #FAFAFA - Pure White */
+    --sidebar-border: 0 0% 25%; /* #404040 - Border Gray */
+    --sidebar-ring: 60 100% 50%; /* #DFFF00 - Vibrant Yellow-Green from logo */
 
-    --metric-cyan: 180 65% 55%; /* #3DC4C4 - Bright Cyan */
-    --metric-green: 150 65% 50%; /* #2DBD7D - Green accent */
-    --metric-coral: 15 80% 60%; /* #E87D5C - Coral accent */
+    --metric-cyan: 60 100% 50%; /* #DFFF00 - Yellow-Green accent */
+    --metric-green: 120 100% 40%; /* #00CC00 - Pure Green */
+    --metric-coral: 30 100% 50%; /* #FF8000 - Orange accent */
+    --metric-purple: 60 100% 50%; /* #DFFF00 - Yellow-Green accent */
     
-    --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+    --shadow-card: 0 10px 25px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
   }
 
   .dark {
-    /* Inventer Design Studio Dark Mode - Same as light mode for consistency */
-    --background: 180 50% 6%; /* #0A1F1F - Deep Dark Teal */
-    --foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
+    /* INVENTOR Design Studio Dark Mode - Enhanced version of logo theme */
+    --background: 0 0% 6%; /* #0F0F0F - Deeper dark */
+    --foreground: 0 0% 98%; /* #FAFAFA - Pure White */
 
-    --card: 180 40% 8%; /* #0D2626 - Slightly Lighter Dark Teal */
-    --card-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
+    --card: 0 0% 8%; /* #141414 - Dark card */
+    --card-foreground: 0 0% 98%; /* #FAFAFA - Pure White */
 
-    --popover: 180 40% 8%; /* #0D2626 - Slightly Lighter Dark Teal */
-    --popover-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
+    --popover: 0 0% 8%; /* #141414 - Dark card */
+    --popover-foreground: 0 0% 98%; /* #FAFAFA - Pure White */
 
-    --primary: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
-    --primary-foreground: 0 0% 100%; /* #FFFFFF - White */
+    --primary: 60 100% 50%; /* #DFFF00 - Vibrant Yellow-Green from logo */
+    --primary-foreground: 0 0% 10%; /* #1A1A1A - Dark text on bright background */
 
-    --secondary: 180 35% 15%; /* #1A3D3D - Medium Dark Teal */
-    --secondary-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
+    --secondary: 0 0% 15%; /* #262626 - Secondary Dark */
+    --secondary-foreground: 0 0% 98%; /* #FAFAFA - Pure White */
 
-    --muted: 180 30% 12%; /* #152E2E - Muted Dark Teal */
-    --muted-foreground: 180 10% 65%; /* #9BA8A8 - Muted Light Teal */
+    --muted: 0 0% 12%; /* #1F1F1F - Muted Dark */
+    --muted-foreground: 0 0% 65%; /* #A6A6A6 - Light Gray */
 
-    --accent: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
-    --accent-foreground: 0 0% 100%; /* #FFFFFF - White */
+    --accent: 60 100% 50%; /* #DFFF00 - Vibrant Yellow-Green from logo */
+    --accent-foreground: 0 0% 10%; /* #1A1A1A - Dark text on bright background */
 
-    --destructive: 0 72% 51%; /* #DD3333 - Red for errors */
+    --destructive: 0 84% 60%; /* #EF4444 - Modern Red */
     --destructive-foreground: 0 0% 100%; /* #FFFFFF - White */
 
-    --border: 180 30% 20%; /* #243D3D - Darker Teal Border */
-    --input: 180 40% 10%; /* #0F2828 - Dark Teal Input Background */
-    --ring: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
+    --border: 0 0% 20%; /* #333333 - Border Gray */
+    --input: 0 0% 12%; /* #1F1F1F - Input Background */
+    --ring: 60 100% 50%; /* #DFFF00 - Vibrant Yellow-Green from logo */
     
-    --sidebar-background: 180 45% 7%; /* #0B2222 - Sidebar Dark Teal */
-    --sidebar-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
-    --sidebar-primary: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
-    --sidebar-primary-foreground: 0 0% 100%; /* #FFFFFF - White */
-    --sidebar-accent: 180 35% 15%; /* #1A3D3D - Medium Dark Teal */
-    --sidebar-accent-foreground: 0 0% 95%; /* #F2F2F2 - Light Gray/White */
-    --sidebar-border: 180 30% 20%; /* #243D3D - Darker Teal Border */
-    --sidebar-ring: 180 65% 45%; /* #28A3A3 - Bright Teal/Cyan */
+    --sidebar-background: 0 0% 5%; /* #0D0D0D - Darker for sidebar */
+    --sidebar-foreground: 0 0% 98%; /* #FAFAFA - Pure White */
+    --sidebar-primary: 60 100% 50%; /* #DFFF00 - Vibrant Yellow-Green from logo */
+    --sidebar-primary-foreground: 0 0% 10%; /* #1A1A1A - Dark text on bright background */
+    --sidebar-accent: 0 0% 15%; /* #262626 - Secondary Dark */
+    --sidebar-accent-foreground: 0 0% 98%; /* #FAFAFA - Pure White */
+    --sidebar-border: 0 0% 20%; /* #333333 - Border Gray */
+    --sidebar-ring: 60 100% 50%; /* #DFFF00 - Vibrant Yellow-Green from logo */
   }
 }
 
@@ -105,6 +106,10 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     line-height: 1.6;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(223, 255, 0, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(223, 255, 0, 0.03) 0%, transparent 50%);
+    background-attachment: fixed;
   }
 
   /* Inventer Design Studio Typography */
@@ -313,11 +318,27 @@ All colors MUST be HSL.
     animation: bounce 1s infinite;
   }
 
-  /* Grid pattern background */
+  /* INVENTOR Design Studio grid pattern - Based on logo colors */
   .bg-grid-pattern {
     background-image: 
-      linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+      linear-gradient(rgba(223, 255, 0, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(223, 255, 0, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Yellow-green grid pattern */
+  .bg-grid-yellow-green {
+    background-image: 
+      linear-gradient(rgba(223, 255, 0, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(223, 255, 0, 0.15) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Dark grid pattern */
+  .bg-grid-dark {
+    background-image: 
+      linear-gradient(rgba(26, 26, 26, 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26, 26, 26, 0.3) 1px, transparent 1px);
     background-size: 20px 20px;
   }
 
@@ -328,9 +349,25 @@ All colors MUST be HSL.
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  /* Gradient text */
+  /* INVENTOR Design Studio gradient text - Based on logo colors */
   .gradient-text {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #DFFF00 0%, #BFFF00 50%, #9FFF00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Yellow-green gradient text */
+  .gradient-yellow-green {
+    background: linear-gradient(135deg, #DFFF00 0%, #BFFF00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Dark to light gradient text */
+  .gradient-dark-light {
+    background: linear-gradient(135deg, #1A1A1A 0%, #DFFF00 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

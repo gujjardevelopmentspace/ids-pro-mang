@@ -15,9 +15,9 @@ export const MetricCard = ({ icon, value, label, color }: MetricCardProps) => {
   };
 
   return (
-    <div className="bg-card rounded-xl p-6 shadow-card hover:shadow-lg transition-shadow">
+    <div className="bg-gradient-to-br from-card via-card/80 to-muted/20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-border/30 cursor-pointer group hover:scale-[1.02] hover:border-primary/20">
       <div className="flex items-center gap-4">
-        <div className={`${colorClasses[color]} shrink-0`}>
+        <div className={`${colorClasses[color]} shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br from-current/10 to-current/20 group-hover:scale-110 transition-transform duration-200`}>
           {icon}
         </div>
         <div className="flex-1 min-w-0">
