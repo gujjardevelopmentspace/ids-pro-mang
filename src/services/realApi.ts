@@ -14,11 +14,114 @@ const getAuthHeaders = () => {
   };
 };
 
+// Mock API responses for development and production (when no backend is available)
+const isDevelopment = import.meta.env.DEV;
+const hasApiUrl = import.meta.env.VITE_API_URL && import.meta.env.VITE_API_URL !== '';
+const useMockAPI = isDevelopment || !hasApiUrl; // Use mock if no API URL is set or in development
+
+const getMockData = (endpoint: string, options: RequestInit = {}) => {
+  // Simulate network delay
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      switch (endpoint) {
+        case '/auth/login':
+          resolve({
+            user: {
+              id: '1',
+              email: 'demo@inventor.com',
+              name: 'Demo User',
+              role: 'ADMIN',
+              avatar: '/avatars/default.jpg',
+              permissions: ['VIEW_DASHBOARD', 'MANAGE_USERS', 'VIEW_PROJECTS'],
+              isActive: true,
+              lastLogin: new Date().toISOString(),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString()
+            },
+            token: 'mock-token-' + Date.now()
+          });
+          break;
+        case '/auth/logout':
+          resolve({ message: 'Logged out successfully' });
+          break;
+        case '/analytics/dashboard':
+          resolve({
+            totalRevenue: 2500000,
+            monthlyRevenue: 1800000,
+            totalProjects: 8,
+            activeProjects: 5,
+            completedProjects: 3,
+            totalUsers: 25,
+            activeUsers: 20,
+            newUsersThisMonth: 5
+          });
+          break;
+        case '/projects':
+          resolve({
+            projects: [
+              {
+                id: '1',
+                name: 'Downtown Office Complex',
+                status: 'active',
+                progress: 65,
+                startDate: '2024-01-15',
+                endDate: '2024-12-31',
+                budget: 2500000,
+                teamSize: 25
+              },
+              {
+                id: '2',
+                name: 'Highway Expansion',
+                status: 'active',
+                progress: 45,
+                startDate: '2024-02-20',
+                endDate: '2025-06-30',
+                budget: 5200000,
+                teamSize: 18
+              }
+            ],
+            total: 8
+          });
+          break;
+        case '/users':
+          resolve({
+            users: [
+              {
+                id: '1',
+                name: 'John Doe',
+                email: 'john@inventor.com',
+                role: 'ADMIN',
+                status: 'active'
+              },
+              {
+                id: '2',
+                name: 'Jane Smith',
+                email: 'jane@inventor.com',
+                role: 'USER',
+                status: 'active'
+              }
+            ],
+            total: 25
+          });
+          break;
+        default:
+          resolve({ message: 'Mock response for ' + endpoint });
+      }
+    }, 300); // Reduced delay for better UX
+  });
+};
+
 // Generic API request function
 const apiRequest = async <T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> => {
+  // Use mock data in development mode or when no API URL is configured
+  if (useMockAPI) {
+    console.log('Using mock API for:', endpoint);
+    return getMockData(endpoint, options) as Promise<T>;
+  }
+
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT);
 
@@ -475,12 +578,14 @@ export class WebSocketService {
   private reconnectInterval = 5000;
   private listeners: Map<string, Function[]> = new Map();
   private isDevelopment = import.meta.env.DEV;
+  private hasWsUrl = import.meta.env.VITE_WS_URL && import.meta.env.VITE_WS_URL !== '';
+  private useMockWebSocket = isDevelopment || !hasWsUrl; // Use mock if no WS URL is set or in development
   private mockInterval: NodeJS.Timeout | null = null;
 
   connect() {
-    // In development mode, use mock WebSocket
-    if (this.isDevelopment) {
-      console.log('Using mock WebSocket for development');
+    // Use mock WebSocket in development mode or when no WebSocket URL is configured
+    if (this.useMockWebSocket) {
+      console.log('Using mock WebSocket');
       this.startMockConnection();
       return;
     }
@@ -601,7 +706,7 @@ export class WebSocketService {
   }
 
   send(type: string, payload: any) {
-    if (this.isDevelopment) {
+    if (this.useMockWebSocket) {
       console.log('Mock WebSocket send:', { type, payload });
       return;
     }
